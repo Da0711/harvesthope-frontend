@@ -1,0 +1,286 @@
+/* =========================================
+   CADASTRO - HARVEST HOPE
+   ========================================= */
+
+.cadastro-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background-color: #f5f7f6;
+}
+
+.cadastro-container {
+  width: 100%;
+  max-width: 480px;
+
+  padding: 40px;
+
+  background-color: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.cadastro-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 35px;
+}
+
+.cadastro-brand-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #174a32;
+
+  font-size: 24px;
+}
+
+.cadastro-brand h1 {
+  margin: 0;
+
+  color: #174a32;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   CABEÇALHO
+   ========================================= */
+
+.cadastro-header {
+  margin-bottom: 28px;
+
+  text-align: center;
+}
+
+.cadastro-header h2 {
+  margin: 0 0 8px;
+
+  color: #222222;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.cadastro-header p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 15px;
+}
+
+
+/* =========================================
+   FORMULÁRIO
+   ========================================= */
+
+.cadastro-form-group {
+  margin-bottom: 18px;
+}
+
+.cadastro-form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #333333;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cadastro-form-group input,
+.cadastro-form-group select {
+  width: 100%;
+  height: 50px;
+
+  padding: 0 14px;
+
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+
+  outline: none;
+
+  background-color: #ffffff;
+
+  color: #333333;
+
+  font-size: 15px;
+
+  transition: 0.2s ease;
+}
+
+.cadastro-form-group input::placeholder {
+  color: #aaaaaa;
+}
+
+.cadastro-form-group input:focus,
+.cadastro-form-group select:focus {
+  border-color: #2e7d52;
+
+  box-shadow: 0 0 0 3px rgba(46, 125, 82, 0.1);
+}
+
+
+/* =========================================
+   BOTÃO
+   ========================================= */
+
+.cadastro-button {
+  width: 100%;
+  height: 52px;
+
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 10px;
+
+  background-color: #2e7d52;
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.cadastro-button:hover {
+  background-color: #246442;
+}
+
+.cadastro-button:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================
+   LINK PARA LOGIN
+   ========================================= */
+
+.cadastro-login {
+  margin-top: 25px;
+
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+
+  font-size: 14px;
+}
+
+.cadastro-login span {
+  color: #777777;
+}
+
+.cadastro-login a {
+  color: #2e7d52;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.cadastro-login a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 500px) {
+
+  .cadastro-page {
+    padding: 20px 15px;
+  }
+
+  .cadastro-container {
+    padding: 30px 22px;
+  }
+
+  .cadastro-header h2 {
+    font-size: 25px;
+  }
+
+}
+
+.cadastro-input-container {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 14px;
+
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+
+  background-color: #ffffff;
+
+  color: #777777;
+
+  transition: 0.2s ease;
+}
+
+.cadastro-input-container:focus-within {
+  border-color: #2e7d52;
+
+  box-shadow: 0 0 0 3px rgba(46, 125, 82, 0.1);
+}
+
+.cadastro-input-container input,
+.cadastro-input-container select {
+  flex: 1;
+
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #333333;
+
+  font-size: 15px;
+}
+
+.cadastro-input-container input::placeholder {
+  color: #aaaaaa;
+}
+
+.cadastro-input-container select {
+  cursor: pointer;
+}
