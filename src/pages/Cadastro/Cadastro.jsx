@@ -3,187 +3,348 @@ import {
   Mail,
   Lock,
   Leaf,
-  Building2
+  Building2,
+  ArrowRight,
 } from "lucide-react";
+
+import { Link } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
 
 import "./Cadastro.css";
 
 function Cadastro() {
-  return (
-    <div className="cadastro-page">
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-      <div className="cadastro-container">
+  const senha = watch("senha");
+
+  const onSubmit = (data) => {
+    console.log("Dados do cadastro:", data);
+  };
+
+  return (
+    <main className="cadastro-page">
+
+      {/* Decorações */}
+      <div className="cadastro-decoration cadastro-decoration-top"></div>
+      <div className="cadastro-decoration cadastro-decoration-bottom"></div>
+
+      <section className="cadastro-container">
 
         {/* Logo */}
-        <div className="cadastro-brand">
+        <div className="cadastro-logo">
 
-          <div className="cadastro-brand-icon">
-            <Leaf size={25} strokeWidth={1.8} />
+          <div className="cadastro-logo-icon">
+            <Leaf size={38} strokeWidth={1.8} />
           </div>
 
-          <h1>HarvestHope</h1>
+          <span>
+            Harvest<span>Hope</span>
+          </span>
 
         </div>
 
-        {/* Cabeçalho */}
-        <div className="cadastro-header">
 
-          <h2>Crie sua conta</h2>
+        {/* Cabeçalho */}
+        <header className="cadastro-header">
+
+          <h1>Crie sua conta</h1>
 
           <p>
             Preencha seus dados para começar
+            <br />
+            a fazer a diferença.
           </p>
 
-        </div>
+        </header>
 
-        <form>
 
-          {/* Nome */}
-          <div className="cadastro-form-group">
+        {/* Formulário */}
+        <form
+          className="cadastro-form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
 
-            <label htmlFor="nome">
-              Nome completo
-            </label>
+          {/* =========================
+              NOME
+          ========================== */}
 
-            <div className="cadastro-input-container">
+          <div>
 
-              <User size={18} />
+            <div
+              className={`cadastro-input ${
+                errors.nome ? "cadastro-input-error" : ""
+              }`}
+            >
 
-              <input
-                type="text"
-                id="nome"
-                name="nome"
-                placeholder="Digite seu nome completo"
-              />
+              <User size={19} />
 
-            </div>
+              <div className="cadastro-input-content">
 
-          </div>
+                <label htmlFor="nome">
+                  Nome completo
+                </label>
 
-          {/* E-mail */}
-          <div className="cadastro-form-group">
+                <input
+                  type="text"
+                  id="nome"
+                  placeholder="Digite seu nome completo"
+                  {...register("nome", {
+                    required: "Campo obrigatório*",
+                  })}
+                />
 
-            <label htmlFor="email">
-              E-mail
-            </label>
-
-            <div className="cadastro-input-container">
-
-              <Mail size={18} />
-
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Digite seu e-mail"
-              />
+              </div>
 
             </div>
 
+            {errors.nome && (
+              <span className="cadastro-error-message">
+                {errors.nome.message}
+              </span>
+            )}
+
           </div>
 
-          {/* Senha */}
-          <div className="cadastro-form-group">
 
-            <label htmlFor="senha">
-              Senha
-            </label>
+          {/* =========================
+              E-MAIL
+          ========================== */}
 
-            <div className="cadastro-input-container">
+          <div>
 
-              <Lock size={18} />
+            <div
+              className={`cadastro-input ${
+                errors.email ? "cadastro-input-error" : ""
+              }`}
+            >
 
-              <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Digite sua senha"
-              />
+              <Mail size={19} />
+
+              <div className="cadastro-input-content">
+
+                <label htmlFor="email">
+                  E-mail
+                </label>
+
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Digite seu e-mail"
+                  {...register("email", {
+                    required: "Campo obrigatório*",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Digite um e-mail válido.",
+                    },
+                  })}
+                />
+
+              </div>
 
             </div>
 
+            {errors.email && (
+              <span className="cadastro-error-message">
+                {errors.email.message}
+              </span>
+            )}
+
           </div>
 
-          {/* Confirmar senha */}
-          <div className="cadastro-form-group">
 
-            <label htmlFor="confirmarSenha">
-              Confirmar senha
-            </label>
+          {/* =========================
+              SENHA
+          ========================== */}
 
-            <div className="cadastro-input-container">
+          <div>
 
-              <Lock size={18} />
+            <div
+              className={`cadastro-input ${
+                errors.senha ? "cadastro-input-error" : ""
+              }`}
+            >
 
-              <input
-                type="password"
-                id="confirmarSenha"
-                name="confirmarSenha"
-                placeholder="Digite sua senha novamente"
-              />
+              <Lock size={19} />
+
+              <div className="cadastro-input-content">
+
+                <label htmlFor="senha">
+                  Senha
+                </label>
+
+                <input
+                  type="password"
+                  id="senha"
+                  placeholder="Digite sua senha"
+                  {...register("senha", {
+                    required: "Campo obrigatório*",
+                    minLength: {
+                      value: 6,
+                      message:
+                        "A senha deve ter pelo menos 6 caracteres.",
+                    },
+                  })}
+                />
+
+              </div>
 
             </div>
 
+            {errors.senha && (
+              <span className="cadastro-error-message">
+                {errors.senha.message}
+              </span>
+            )}
+
           </div>
 
-          {/* Tipo de usuário */}
-          <div className="cadastro-form-group">
 
-            <label htmlFor="tipoUsuario">
-              Tipo de usuário
-            </label>
+          {/* =========================
+              CONFIRMAR SENHA
+          ========================== */}
 
-            <div className="cadastro-input-container">
+          <div>
 
-              <Building2 size={18} />
+            <div
+              className={`cadastro-input ${
+                errors.confirmarSenha
+                  ? "cadastro-input-error"
+                  : ""
+              }`}
+            >
 
-              <select
-                id="tipoUsuario"
-                name="tipoUsuario"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Selecione uma opção
-                </option>
+              <Lock size={19} />
 
-                <option value="doador">
-                  Doador
-                </option>
+              <div className="cadastro-input-content">
 
-                <option value="instituicao">
-                  Instituição Beneficiária
-                </option>
+                <label htmlFor="confirmarSenha">
+                  Confirmar senha
+                </label>
 
-              </select>
+                <input
+                  type="password"
+                  id="confirmarSenha"
+                  placeholder="Digite sua senha novamente"
+                  {...register("confirmarSenha", {
+                    required: "Campo obrigatório*",
+                    validate: (value) =>
+                      value === senha ||
+                      "As senhas não coincidem.",
+                  })}
+                />
+
+              </div>
 
             </div>
 
+            {errors.confirmarSenha && (
+              <span className="cadastro-error-message">
+                {errors.confirmarSenha.message}
+              </span>
+            )}
+
           </div>
+
+
+          {/* =========================
+              TIPO DE USUÁRIO
+          ========================== */}
+
+          <div>
+
+            <div
+              className={`cadastro-input ${
+                errors.tipoUsuario
+                  ? "cadastro-input-error"
+                  : ""
+              }`}
+            >
+
+              <Building2 size={19} />
+
+              <div className="cadastro-input-content">
+
+                <label htmlFor="tipoUsuario">
+                  Tipo de usuário
+                </label>
+
+                <select
+                  id="tipoUsuario"
+                  defaultValue=""
+                  {...register("tipoUsuario", {
+                    required: "Campo obrigatório*",
+                  })}
+                >
+
+                  <option value="" disabled>
+                    Selecione uma opção
+                  </option>
+
+                  <option value="doador">
+                    Doador
+                  </option>
+
+                  <option value="instituicao">
+                    Instituição Beneficiária
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            {errors.tipoUsuario && (
+              <span className="cadastro-error-message">
+                {errors.tipoUsuario.message}
+              </span>
+            )}
+
+          </div>
+
+
+          {/* =========================
+              BOTÃO
+          ========================== */}
 
           <button
             type="submit"
             className="cadastro-button"
           >
-            Criar conta
+
+            <span>
+              Criar conta
+            </span>
+
+            <ArrowRight size={20} />
+
           </button>
 
         </form>
 
+
+        {/* Login */}
         <div className="cadastro-login">
 
           <span>
             Já possui uma conta?
           </span>
 
-          <a href="/">
+          <Link to="/">
             Fazer login
-          </a>
+          </Link>
 
         </div>
 
-      </div>
+      </section>
 
-    </div>
+    </main>
   );
 }
 

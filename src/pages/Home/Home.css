@@ -1,0 +1,134 @@
+.home-page {
+  min-height: 100vh;
+  background: #f5f7f6;
+  color: #111;
+}
+
+.home-header {
+  height: 75px;
+  padding: 0 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #2e8758;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.home-logo span span {
+  color: #74b892;
+}
+
+.home-user {
+  font-size: 16px;
+  color: #555;
+}
+
+.home-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 30px;
+}
+
+.home-welcome {
+  margin-bottom: 45px;
+}
+
+.home-welcome h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+}
+
+.home-welcome p {
+  margin: 0;
+  font-size: 18px;
+  color: #666;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.home-card {
+  padding: 30px;
+
+  background: white;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.home-card-icon {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  border-radius: 12px;
+
+  color: #2e8758;
+  background: #e8f4ed;
+}
+
+.home-card h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.home-card p {
+  min-height: 50px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.home-card button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2e8758;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.home-card button:hover {
+  background: #246d47;
+}
+
+@media (max-width: 800px) {
+  .home-header {
+    padding: 0 20px;
+  }
+
+  .home-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .home-welcome h1 {
+    font-size: 28px;
+  }
+}

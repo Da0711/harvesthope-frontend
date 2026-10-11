@@ -1,8 +1,10 @@
 /* =========================================
-   CADASTRO - HARVEST HOPE
+   HARVEST HOPE - CADASTRO
    ========================================= */
 
 .cadastro-page {
+  position: relative;
+
   min-height: 100vh;
   width: 100%;
 
@@ -10,22 +12,68 @@
   align-items: center;
   justify-content: center;
 
-  padding: 40px 20px;
+  overflow: hidden;
 
-  background-color: #f5f7f6;
+  padding: 50px 20px;
+
+  background: #f4f7f5;
 }
 
+
+/* =========================================
+   DECORAÇÕES
+   ========================================= */
+
+.cadastro-decoration {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.cadastro-decoration-top {
+  width: 350px;
+  height: 350px;
+
+  top: -190px;
+  right: -120px;
+
+  background: rgba(46, 125, 82, 0.12);
+}
+
+.cadastro-decoration-bottom {
+  width: 300px;
+  height: 300px;
+
+  bottom: -170px;
+  left: -100px;
+
+  background: rgba(46, 125, 82, 0.10);
+}
+
+
+/* =========================================
+   CONTAINER
+   ========================================= */
+
 .cadastro-container {
+  position: relative;
+  z-index: 2;
+
   width: 100%;
-  max-width: 480px;
+  max-width: 570px;
 
-  padding: 40px;
+  padding: 45px 55px;
 
-  background-color: #ffffff;
+  border: 1px solid rgba(46, 125, 82, 0.08);
 
-  border-radius: 16px;
+  border-radius: 24px;
 
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+
+  box-shadow:
+    0 20px 60px rgba(20, 60, 40, 0.10);
 }
 
 
@@ -33,38 +81,35 @@
    LOGO
    ========================================= */
 
-.cadastro-brand {
+.cadastro-logo {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 12px;
+  gap: 9px;
 
   margin-bottom: 35px;
+
+  color: #174a32;
 }
 
-.cadastro-brand-icon {
-  width: 48px;
-  height: 48px;
-
+.cadastro-logo-icon {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
-
-  background-color: #174a32;
-
-  font-size: 24px;
+  color: #2e7d52;
 }
 
-.cadastro-brand h1 {
-  margin: 0;
-
-  color: #174a32;
-
-  font-size: 28px;
+.cadastro-logo > span {
+  font-size: 27px;
   font-weight: 700;
+
+  letter-spacing: -0.8px;
+}
+
+.cadastro-logo > span span {
+  color: #2e7d52;
 }
 
 
@@ -73,26 +118,30 @@
    ========================================= */
 
 .cadastro-header {
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 
   text-align: center;
 }
 
-.cadastro-header h2 {
+.cadastro-header h1 {
   margin: 0 0 8px;
 
-  color: #222222;
+  color: #111b16;
 
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
+
+  letter-spacing: -1px;
 }
 
 .cadastro-header p {
   margin: 0;
 
-  color: #777777;
+  color: #7c8781;
 
   font-size: 15px;
+
+  line-height: 1.5;
 }
 
 
@@ -100,51 +149,99 @@
    FORMULÁRIO
    ========================================= */
 
-.cadastro-form-group {
-  margin-bottom: 18px;
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
 }
 
-.cadastro-form-group label {
-  display: block;
 
-  margin-bottom: 7px;
+/* =========================================
+   INPUT
+   ========================================= */
 
-  color: #333333;
+.cadastro-input {
+  min-height: 64px;
 
-  font-size: 14px;
-  font-weight: 600;
-}
+  display: flex;
+  align-items: center;
 
-.cadastro-form-group input,
-.cadastro-form-group select {
-  width: 100%;
-  height: 50px;
+  gap: 14px;
 
-  padding: 0 14px;
+  padding: 9px 17px;
 
-  border: 1px solid #dddddd;
-  border-radius: 9px;
+  border: 1px solid #dce2df;
+  border-radius: 13px;
 
-  outline: none;
+  background: #ffffff;
 
-  background-color: #ffffff;
-
-  color: #333333;
-
-  font-size: 15px;
+  color: #526059;
 
   transition: 0.2s ease;
 }
 
-.cadastro-form-group input::placeholder {
-  color: #aaaaaa;
-}
-
-.cadastro-form-group input:focus,
-.cadastro-form-group select:focus {
+.cadastro-input:focus-within {
   border-color: #2e7d52;
 
-  box-shadow: 0 0 0 3px rgba(46, 125, 82, 0.1);
+  box-shadow:
+    0 0 0 4px rgba(46, 125, 82, 0.08);
+}
+
+.cadastro-input > svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   CONTEÚDO DO INPUT
+   ========================================= */
+
+.cadastro-input-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.cadastro-input-content label {
+  margin-bottom: 2px;
+
+  color: #26332d;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cadastro-input-content input,
+.cadastro-input-content select {
+  width: 100%;
+
+  height: 24px;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #6f7b75;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.cadastro-input-content input::placeholder {
+  color: #a4ada8;
+}
+
+.cadastro-input-content select {
+  cursor: pointer;
+
+  appearance: auto;
 }
 
 
@@ -154,16 +251,24 @@
 
 .cadastro-button {
   width: 100%;
-  height: 52px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
 
   margin-top: 8px;
 
   border: none;
-  border-radius: 10px;
+  border-radius: 13px;
 
-  background-color: #2e7d52;
+  background: #2e7d52;
 
   color: #ffffff;
+
+  font-family: inherit;
 
   font-size: 16px;
   font-weight: 600;
@@ -174,34 +279,37 @@
 }
 
 .cadastro-button:hover {
-  background-color: #246442;
+  background: #246442;
+
+  transform: translateY(-1px);
 }
 
 .cadastro-button:active {
-  transform: scale(0.99);
+  transform: translateY(0);
 }
 
 
 /* =========================================
-   LINK PARA LOGIN
+   LOGIN
    ========================================= */
 
 .cadastro-login {
-  margin-top: 25px;
-
   display: flex;
   justify-content: center;
+
   gap: 5px;
+
+  margin-top: 25px;
 
   font-size: 14px;
 }
 
 .cadastro-login span {
-  color: #777777;
+  color: #7c8781;
 }
 
 .cadastro-login a {
-  color: #2e7d52;
+  color: #246442;
 
   font-weight: 600;
 
@@ -217,70 +325,63 @@
    RESPONSIVIDADE
    ========================================= */
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
   .cadastro-page {
-    padding: 20px 15px;
+    padding: 25px 15px;
   }
 
   .cadastro-container {
-    padding: 30px 22px;
+    padding: 35px 25px;
+
+    border-radius: 18px;
   }
 
-  .cadastro-header h2 {
-    font-size: 25px;
+  .cadastro-logo {
+    margin-bottom: 28px;
+  }
+
+  .cadastro-header h1 {
+    font-size: 29px;
   }
 
 }
 
-.cadastro-input-container {
-  width: 100%;
-  height: 50px;
 
-  display: flex;
-  align-items: center;
+@media (max-width: 400px) {
 
-  gap: 10px;
+  .cadastro-container {
+    padding: 30px 18px;
+  }
 
-  padding: 0 14px;
+  .cadastro-input {
+    padding: 8px 13px;
+  }
 
-  border: 1px solid #dddddd;
-  border-radius: 9px;
-
-  background-color: #ffffff;
-
-  color: #777777;
-
-  transition: 0.2s ease;
 }
 
-.cadastro-input-container:focus-within {
-  border-color: #2e7d52;
+/* =========================================
+   ERROS DE VALIDAÇÃO
+   ========================================= */
 
-  box-shadow: 0 0 0 3px rgba(46, 125, 82, 0.1);
+.cadastro-input-error {
+  border-color: #d9534f;
 }
 
-.cadastro-input-container input,
-.cadastro-input-container select {
-  flex: 1;
+.cadastro-input-error:focus-within {
+  border-color: #d9534f;
 
-  width: 100%;
-  height: 100%;
-
-  border: none;
-  outline: none;
-
-  background: transparent;
-
-  color: #333333;
-
-  font-size: 15px;
+  box-shadow:
+    0 0 0 4px rgba(217, 83, 79, 0.08);
 }
 
-.cadastro-input-container input::placeholder {
-  color: #aaaaaa;
-}
+.cadastro-error-message {
+  display: block;
 
-.cadastro-input-container select {
-  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 4px;
+
+  color: #d9534f;
+
+  font-size: 12px;
 }

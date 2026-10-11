@@ -1,78 +1,232 @@
 /* =========================================
-   LOGIN - HARVEST HOPE
+   HARVEST HOPE - LOGIN
    ========================================= */
 
 .login-page {
   min-height: 100vh;
   width: 100%;
+
   display: flex;
-  background-color: #ffffff;
+
+  background: #f4f7f5;
 }
 
 
 /* =========================================
-   LADO ESQUERDO
+   PAINEL ESQUERDO - IMAGEM
    ========================================= */
 
-.login-left {
+.login-showcase {
+  position: relative;
+
   width: 50%;
   min-height: 100vh;
 
   display: flex;
   align-items: center;
-  justify-content: center;
 
-  background-color: #174a32;
+  overflow: hidden;
 
-  padding: 60px;
-}
+  padding: 70px;
 
-.login-brand {
-  max-width: 430px;
-  text-align: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
   color: #ffffff;
 }
 
-.brand-icon {
-  width: 90px;
-  height: 90px;
 
-  margin: 0 auto 25px;
+/* Camada escura sobre a imagem */
+.showcase-overlay {
+  position: absolute;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
 
-  border-radius: 50%;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(12, 55, 37, 0.82),
+      rgba(17, 73, 47, 0.52)
+    );
 
-  background-color: #ffffff;
-
-  font-size: 42px;
-}
-
-.login-brand h1 {
-  margin: 0 0 15px;
-
-  font-size: 42px;
-  font-weight: 700;
-  letter-spacing: -1px;
-}
-
-.login-brand p {
-  margin: 0;
-
-  font-size: 18px;
-  line-height: 1.6;
-
-  color: #e7f3ec;
+  z-index: 1;
 }
 
 
 /* =========================================
-   LADO DIREITO
+   CONTEÚDO DO PAINEL ESQUERDO
    ========================================= */
 
-.login-right {
+.showcase-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  max-width: 500px;
+}
+
+
+/* =========================================
+   LOGO
+   ========================================= */
+
+.showcase-logo {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+.showcase-logo svg {
+  flex-shrink: 0;
+
+  color: #ffffff;
+}
+
+.showcase-logo h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 42px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: -1.5px;
+}
+
+.showcase-logo h1 span {
+  color: #91d3a9;
+}
+
+
+/* =========================================
+   FRASE PRINCIPAL
+   ========================================= */
+
+.showcase-description {
+  margin: 0;
+
+  color: #f4faf6;
+
+  font-size: 22px;
+  line-height: 1.5;
+
+  font-weight: 400;
+}
+
+
+/* =========================================
+   LINHA DECORATIVA
+   ========================================= */
+
+.showcase-line {
+  width: 48px;
+  height: 3px;
+
+  margin: 28px 0;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================
+   BENEFÍCIOS
+   ========================================= */
+
+.showcase-benefits {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.benefit svg {
+  flex-shrink: 0;
+
+  color: #a8dfb9;
+}
+
+.heart-icon {
+  width: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 21px;
+}
+
+
+/* =========================================
+   CAIXA DE MENSAGEM
+   ========================================= */
+
+.showcase-message {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-top: 55px;
+
+  padding: 18px 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 18px;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  backdrop-filter: blur(8px);
+}
+
+.showcase-message svg {
+  flex-shrink: 0;
+
+  color: #a8dfb9;
+}
+
+.showcase-message p {
+  margin: 0;
+
+  color: #f4faf6;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   PAINEL DIREITO
+   ========================================= */
+
+.login-form-section {
+  position: relative;
+
   width: 50%;
   min-height: 100vh;
 
@@ -80,12 +234,104 @@
   align-items: center;
   justify-content: center;
 
-  padding: 40px;
+  overflow: hidden;
+
+  padding: 50px;
+
+  background: #ffffff;
 }
 
-.login-container {
+
+/* =========================================
+   DECORAÇÕES DO FUNDO
+   ========================================= */
+
+.login-form-section::before {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  right: -140px;
+  bottom: -150px;
+
+  border-radius: 50%;
+
+  background: rgba(66, 139, 91, 0.13);
+
+  transform: rotate(25deg);
+
+  pointer-events: none;
+}
+
+.login-form-section::after {
+  content: "";
+
+  position: absolute;
+
+  width: 210px;
+  height: 210px;
+
+  left: -130px;
+  top: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(66, 139, 91, 0.08);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CONTAINER DO FORMULÁRIO
+   ========================================= */
+
+.login-form-container {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
   max-width: 430px;
+}
+
+
+/* =========================================
+   LOGO DO FORMULÁRIO
+   ========================================= */
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-bottom: 55px;
+
+  color: #174a32;
+}
+
+.login-logo svg {
+  color: #2e7d52;
+}
+
+.login-logo > span {
+  color: #174a32;
+
+  font-size: 26px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: -0.8px;
+}
+
+.login-logo > span span {
+  color: #2e7d52;
 }
 
 
@@ -94,24 +340,31 @@
    ========================================= */
 
 .login-header {
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .login-header h2 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 
-  color: #222222;
+  color: #111b16;
 
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 700;
+
+  line-height: 1.15;
+
+  letter-spacing: -1.2px;
 }
 
 .login-header p {
   margin: 0;
 
-  color: #777777;
+  color: #7c8781;
 
   font-size: 16px;
+  font-weight: 400;
+
+  line-height: 1.5;
 }
 
 
@@ -119,78 +372,79 @@
    FORMULÁRIO
    ========================================= */
 
-.form-group {
-  margin-bottom: 22px;
-}
+.login-form {
+  width: 100%;
 
-.form-group label {
-  display: block;
+  display: flex;
+  flex-direction: column;
 
-  margin-bottom: 8px;
-
-  color: #333333;
-
-  font-size: 14px;
-  font-weight: 600;
+  gap: 16px;
 }
 
 
 /* =========================================
-   INPUT
+   INPUTS
    ========================================= */
 
-.input-container {
+.modern-input {
   width: 100%;
-  height: 52px;
+  height: 58px;
 
   display: flex;
   align-items: center;
 
-  border: 1px solid #dddddd;
-  border-radius: 10px;
+  gap: 13px;
 
-  background-color: #ffffff;
+  padding: 0 18px;
 
-  transition: 0.2s ease;
+  border: 1px solid #dce2df;
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  color: #53625b;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.input-container:focus-within {
+.modern-input:hover {
+  border-color: #c4cec9;
+}
+
+.modern-input:focus-within {
   border-color: #2e7d52;
 
-  box-shadow: 0 0 0 3px rgba(46, 125, 82, 0.1);
+  box-shadow:
+    0 0 0 4px rgba(46, 125, 82, 0.08);
 }
 
-.input-icon {
-  width: 50px;
+.modern-input svg {
+  flex-shrink: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 18px;
-
-  color: #777777;
+  color: #53625b;
 }
 
-.input-container input {
-  flex: 1;
-
+.modern-input input {
+  width: 100%;
   height: 100%;
 
-  padding: 0 15px 0 0;
+  padding: 0;
 
   border: none;
   outline: none;
 
   background: transparent;
 
-  color: #333333;
+  color: #26332d;
 
+  font-family: inherit;
   font-size: 15px;
 }
 
-.input-container input::placeholder {
-  color: #aaaaaa;
+.modern-input input::placeholder {
+  color: #a4ada8;
 }
 
 
@@ -199,21 +453,26 @@
    ========================================= */
 
 .forgot-password {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 
-  margin-top: -8px;
-  margin-bottom: 25px;
+  margin-top: 1px;
 }
 
 .forgot-password a {
-  color: #2e7d52;
+  color: #246442;
 
   font-size: 14px;
+  font-weight: 600;
 
   text-decoration: none;
+
+  transition: color 0.2s ease;
 }
 
 .forgot-password a:hover {
+  color: #174a32;
+
   text-decoration: underline;
 }
 
@@ -222,31 +481,58 @@
    BOTÃO ENTRAR
    ========================================= */
 
-.login-button {
+.primary-button {
   width: 100%;
-  height: 52px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 8px;
 
   border: none;
-  border-radius: 10px;
+  border-radius: 13px;
 
-  background-color: #2e7d52;
+  background: #2e7d52;
 
   color: #ffffff;
 
+  font-family: inherit;
   font-size: 16px;
   font-weight: 600;
 
   cursor: pointer;
 
-  transition: 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.login-button:hover {
-  background-color: #246442;
+.primary-button:hover {
+  background: #246442;
+
+  box-shadow:
+    0 8px 20px rgba(46, 125, 82, 0.18);
+
+  transform: translateY(-1px);
 }
 
-.login-button:active {
-  transform: scale(0.99);
+.primary-button:active {
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+.primary-button svg {
+  transition: transform 0.2s ease;
+}
+
+.primary-button:hover svg {
+  transform: translateX(3px);
 }
 
 
@@ -255,100 +541,152 @@
    ========================================= */
 
 .login-divider {
+  width: 100%;
+
   display: flex;
   align-items: center;
 
   gap: 15px;
 
-  margin: 30px 0;
+  margin: 28px 0;
 }
 
-.login-divider::before,
-.login-divider::after {
-  content: "";
-
+.login-divider span {
   flex: 1;
 
   height: 1px;
 
-  background-color: #dddddd;
+  background: #dce2df;
 }
 
-.login-divider span {
-  color: #999999;
+.login-divider p {
+  margin: 0;
+
+  color: #8b9590;
 
   font-size: 14px;
 }
 
 
 /* =========================================
-   CADASTRO
+   BOTÃO CRIAR CONTA
    ========================================= */
 
-.register-text {
-  margin: 0 0 12px;
-
-  text-align: center;
-
-  color: #777777;
-
-  font-size: 14px;
-}
-
-.register-button {
+.secondary-button {
   width: 100%;
-  height: 50px;
+  height: 54px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  gap: 10px;
+
   border: 1px solid #2e7d52;
-  border-radius: 10px;
+  border-radius: 13px;
 
-  color: #2e7d52;
+  background: #ffffff;
 
+  color: #205b3c;
+
+  font-family: inherit;
   font-size: 15px;
   font-weight: 600;
 
   text-decoration: none;
 
-  transition: 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.register-button:hover {
-  background-color: #2e7d52;
+.secondary-button:hover {
+  background: #f0f7f3;
 
-  color: #ffffff;
+  color: #174a32;
+
+  transform: translateY(-1px);
+}
+
+.secondary-button:active {
+  transform: translateY(0);
 }
 
 
 /* =========================================
-   RESPONSIVIDADE
+   RESPONSIVIDADE - TABLET
    ========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
-  .login-left {
-    width: 40%;
-    padding: 30px;
+  .login-showcase {
+    width: 45%;
+
+    padding: 45px;
   }
 
-  .login-right {
-    width: 60%;
-    padding: 30px;
+  .login-form-section {
+    width: 55%;
+
+    padding: 40px;
   }
 
-  .login-brand h1 {
-    font-size: 32px;
+  .showcase-logo h1 {
+    font-size: 34px;
   }
 
-  .login-brand p {
-    font-size: 16px;
+  .showcase-description {
+    font-size: 18px;
+  }
+
+  .login-header h2 {
+    font-size: 33px;
   }
 
 }
 
+
+/* =========================================
+   RESPONSIVIDADE - TABLET PEQUENO
+   ========================================= */
+
+@media (max-width: 800px) {
+
+  .login-showcase {
+    width: 40%;
+
+    padding: 30px;
+  }
+
+  .login-form-section {
+    width: 60%;
+
+    padding: 30px;
+  }
+
+  .showcase-logo h1 {
+    font-size: 29px;
+  }
+
+  .showcase-description {
+    font-size: 16px;
+  }
+
+  .showcase-message {
+    padding: 14px 16px;
+  }
+
+  .showcase-message p {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVIDADE - CELULAR
+   ========================================= */
 
 @media (max-width: 700px) {
 
@@ -356,39 +694,167 @@
     flex-direction: column;
   }
 
-  .login-left {
+  .login-showcase {
     width: 100%;
-    min-height: 240px;
+    min-height: 340px;
 
-    padding: 35px 20px;
+    padding: 40px 25px;
+
+    align-items: center;
   }
 
-  .login-right {
+  .login-form-section {
     width: 100%;
     min-height: auto;
 
-    padding: 40px 25px;
+    padding: 45px 25px;
   }
 
-  .brand-icon {
-    width: 65px;
-    height: 65px;
-
-    margin-bottom: 15px;
-
-    font-size: 30px;
+  .showcase-content {
+    max-width: 600px;
   }
 
-  .login-brand h1 {
-    font-size: 28px;
+  .showcase-logo h1 {
+    font-size: 32px;
   }
 
-  .login-brand p {
-    font-size: 14px;
+  .showcase-description {
+    font-size: 18px;
+  }
+
+  .showcase-benefits {
+    gap: 12px;
+  }
+
+  .showcase-message {
+    margin-top: 30px;
+  }
+
+  .login-logo {
+    margin-bottom: 35px;
   }
 
   .login-header h2 {
-    font-size: 27px;
+    font-size: 31px;
   }
 
+}
+
+
+/* =========================================
+   CELULARES PEQUENOS
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .login-showcase {
+    min-height: 300px;
+
+    padding: 30px 20px;
+  }
+
+  .showcase-logo {
+    margin-bottom: 18px;
+  }
+
+  .showcase-logo h1 {
+    font-size: 28px;
+  }
+
+  .showcase-logo svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .showcase-description {
+    font-size: 16px;
+  }
+
+  .showcase-line {
+    margin: 20px 0;
+  }
+
+  .showcase-benefits {
+    display: none;
+  }
+
+  .showcase-message {
+    margin-top: 20px;
+
+    padding: 13px 15px;
+  }
+
+  .showcase-message svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .showcase-message p {
+    font-size: 11px;
+  }
+
+  .login-form-section {
+    padding: 35px 18px;
+  }
+
+  .login-form-container {
+    max-width: 100%;
+  }
+
+  .login-logo {
+    margin-bottom: 30px;
+  }
+
+  .login-logo > span {
+    font-size: 23px;
+  }
+
+  .login-header h2 {
+    font-size: 28px;
+  }
+
+  .login-header p {
+    font-size: 14px;
+  }
+
+  .modern-input {
+    height: 54px;
+
+    padding: 0 15px;
+  }
+
+  .primary-button {
+    height: 54px;
+  }
+
+  .secondary-button {
+    height: 52px;
+  }
+
+}
+
+/* =========================================
+   ERROS DE VALIDAÇÃO
+   ========================================= */
+
+.input-error {
+  border-color: #d9534f;
+}
+
+.input-error:focus-within {
+  border-color: #d9534f;
+
+  box-shadow:
+    0 0 0 4px rgba(217, 83, 79, 0.08);
+}
+
+.error-message {
+  display: block;
+
+  margin-top: 6px;
+  margin-left: 3px;
+
+  color: #d9534f;
+
+  font-size: 12px;
 }
