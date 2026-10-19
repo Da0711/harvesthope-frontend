@@ -1,142 +1,226 @@
-import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { useState } from "react";
+import { Search, MapPin, Mail, Phone, Building2, ExternalLink } from "lucide-react";
 import "./Instituicoes.css";
 
+const instituicoesExemplo = [
+  {
+    id: 1,
+    nome: "Instituto Esperança",
+    descricao:
+      "Organização dedicada a apoiar famílias em situação de vulnerabilidade por meio da distribuição de alimentos e assistência social.",
+    localizacao: "Centro, Osasco - SP",
+    email: "contato@exemplo.com",
+    telefone: "(11) 3000-1001",
+    cnpj: "00.000.000/0001-01",
+    site: "",
+  },
+  {
+    id: 2,
+    nome: "Projeto Mesa Solidária",
+    descricao:
+      "Projeto social que promove a segurança alimentar e incentiva a doação consciente de alimentos.",
+    localizacao: "Vila Yara, Osasco - SP",
+    email: "mesasolidaria@exemplo.com",
+    telefone: "(11) 3000-1002",
+    cnpj: "00.000.000/0001-02",
+    site: "",
+  },
+  {
+    id: 3,
+    nome: "Casa Acolhedora",
+    descricao:
+      "Instituição fictícia que oferece acolhimento e apoio a pessoas e famílias que precisam de ajuda.",
+    localizacao: "Presidente Altino, Osasco - SP",
+    email: "contato@exemplo.com",
+    telefone: "(11) 3000-1003",
+    cnpj: "00.000.000/0001-03",
+    site: "",
+  },
+  {
+    id: 4,
+    nome: "Rede Alimentar Solidária",
+    descricao:
+      "Iniciativa de combate ao desperdício que conecta doadores a organizações que distribuem alimentos.",
+    localizacao: "Zona Oeste, São Paulo - SP",
+    email: "redealimentar@exemplo.com",
+    telefone: "(11) 3000-1004",
+    cnpj: "00.000.000/0001-04",
+    site: "",
+  },
+  {
+    id: 5,
+    nome: "Projeto Novo Começo",
+    descricao:
+      "Projeto social fictício voltado ao apoio comunitário e à arrecadação de alimentos para pessoas necessitadas.",
+    localizacao: "Quitaúna, Osasco - SP",
+    email: "novocomeco@exemplo.com",
+    telefone: "(11) 3000-1005",
+    cnpj: "00.000.000/0001-05",
+    site: "",
+  },
+  {
+    id: 6,
+    nome: "Centro Comunitário União",
+    descricao:
+      "Espaço comunitário fictício que incentiva a solidariedade e a colaboração entre moradores.",
+    localizacao: "Jaguaribe, Osasco - SP",
+    email: "uniao@exemplo.com",
+    telefone: "(11) 3000-1006",
+    cnpj: "00.000.000/0001-06",
+    site: "",
+  },
+];
+
 function Instituicoes() {
-  const [instituicoes, setInstituicoes] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState("");
 
-  useEffect(() => {
-    async function carregarInstituicoes() {
-      try {
-        setCarregando(true);
-        setErro("");
+  const termo = pesquisa.trim().toLocaleLowerCase("pt-BR");
 
-        const resposta = await api.get("/api/v1/instituicoes");
-        setInstituicoes(resposta.data);
-      } catch (error) {
-        console.error("Erro ao carregar instituições:", error);
-        setErro(
-          "Não foi possível carregar as instituições. Tente novamente."
-        );
-      } finally {
-        setCarregando(false);
-      }
-    }
-
-    carregarInstituicoes();
-  }, []);
-
-  const termo = pesquisa.toLowerCase();
-
-  const instituicoesFiltradas = instituicoes.filter((instituicao) => {
-    return (
-      instituicao.nome?.toLowerCase().includes(termo) ||
-      instituicao.localizacao?.toLowerCase().includes(termo) ||
-      instituicao.descricao?.toLowerCase().includes(termo)
-    );
-  });
+  const instituicoesFiltradas = instituicoesExemplo.filter(
+    (instituicao) =>
+      [
+        instituicao.nome,
+        instituicao.localizacao,
+        instituicao.descricao,
+        instituicao.email,
+      ].some((campo) =>
+        campo.toLocaleLowerCase("pt-BR").includes(termo)
+      )
+  );
 
   return (
-    <div className="instituicoes-container">
+    <main className="instituicoes-container">
       <header className="instituicoes-header">
+        <span className="instituicoes-etiqueta">
+          <Building2 size={16} />
+          NOSSA REDE SOLIDÁRIA
+        </span>
+
         <h1>Instituições</h1>
+
         <p>
-          Consulte as instituições cadastradas e encontre informações
-          de contato, localização e descrição de cada organização.
+          Conheça organizações que fazem a diferença e encontre
+          informações para conectar sua doação a quem precisa.
         </p>
       </header>
 
       <div className="pesquisa-container">
+        <Search size={21} aria-hidden="true" />
+
         <input
-          type="text"
+          type="search"
           placeholder="Pesquisar por nome, localização ou descrição..."
           value={pesquisa}
           onChange={(e) => setPesquisa(e.target.value)}
           aria-label="Pesquisar instituição"
         />
-      </div>
 
-      {carregando ? (
-        <div className="sem-resultados">
-          <p>Carregando instituições...</p>
-        </div>
-      ) : erro ? (
-        <div className="sem-resultados" role="alert">
-          <h3>Não foi possível carregar</h3>
-          <p>{erro}</p>
+        {pesquisa && (
           <button
             type="button"
-            onClick={() => window.location.reload()}
+            className="limpar-pesquisa"
+            onClick={() => setPesquisa("")}
           >
-            Tentar novamente
+            Limpar
           </button>
-        </div>
-      ) : instituicoesFiltradas.length === 0 ? (
-        <div className="sem-resultados">
+        )}
+      </div>
+
+      <div className="instituicoes-resumo">
+        <span>
+          <strong>{instituicoesFiltradas.length}</strong>{" "}
+          {instituicoesFiltradas.length === 1
+            ? "instituição encontrada"
+            : "instituições encontradas"}
+        </span>
+        <span className="instituicoes-resumo-detalhe">
+          Conexões que transformam vidas
+        </span>
+      </div>
+
+      {instituicoesFiltradas.length === 0 ? (
+        <section className="sem-resultados">
+          <Search size={34} />
           <h3>Nenhuma instituição encontrada</h3>
           <p>
-            Tente utilizar outros termos na pesquisa para localizar
-            uma instituição.
+            Não encontramos resultados para "{pesquisa}". Tente
+            pesquisar por outro nome ou localização.
           </p>
-        </div>
+          <button
+            type="button"
+            className="site-button"
+            onClick={() => setPesquisa("")}
+          >
+            Limpar pesquisa
+          </button>
+        </section>
       ) : (
-        <div className="instituicoes-grid">
+        <section
+          className="instituicoes-grid"
+          aria-label="Lista de instituições"
+        >
           {instituicoesFiltradas.map((instituicao) => (
             <article
               className="instituicao-card"
               key={instituicao.id}
             >
               <div className="card-topo">
+                <div className="instituicao-icone">
+                  <Building2 size={25} />
+                </div>
+
                 <h2>{instituicao.nome}</h2>
               </div>
 
               <div className="card-conteudo">
-                <p>
-                  <strong>Descrição:</strong>{" "}
-                  {instituicao.descricao || "Não informada"}
+                <p>{instituicao.descricao}</p>
+
+                <p className="instituicao-informacao">
+                  <MapPin size={17} />
+                  <span>{instituicao.localizacao}</span>
                 </p>
 
-                <p>
-                  <strong>Localização:</strong>{" "}
-                  {instituicao.localizacao || "Não informada"}
+                <p className="instituicao-informacao">
+                  <Mail size={17} />
+                  <span>{instituicao.email}</span>
                 </p>
 
-                <p>
-                  <strong>E-mail:</strong>{" "}
-                  {instituicao.email || "Não informado"}
-                </p>
-
-                <p>
-                  <strong>Telefone:</strong>{" "}
-                  {instituicao.telefone || "Não informado"}
-                </p>
-
-                <p>
-                  <strong>CNPJ:</strong>{" "}
-                  {instituicao.cnpj || "Não informado"}
+                <p className="instituicao-informacao">
+                  <Phone size={17} />
+                  <span>{instituicao.telefone}</span>
                 </p>
               </div>
 
-              {instituicao.site && (
-                <div className="card-acoes">
-                  <a
-                    className="site-button"
-                    href={instituicao.site}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visitar site
-                  </a>
-                </div>
-              )}
+              <div className="instituicao-rodape">
+                <span className="instituicao-status">
+                  <span className="status-ponto" />
+                  Instituição demonstrativa
+                </span>
+
+                {instituicao.site && (
+                  <div className="card-acoes">
+                    <a
+                      className="site-button"
+                      href={instituicao.site}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Visitar site
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
+                )}
+              </div>
             </article>
           ))}
-        </div>
+        </section>
       )}
-    </div>
+
+      <p className="instituicoes-aviso">
+        Os dados exibidos são fictícios e servem apenas para a
+        demonstração visual do Harvest Hope.
+      </p>
+    </main>
   );
 }
 

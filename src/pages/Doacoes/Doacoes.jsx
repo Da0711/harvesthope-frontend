@@ -8,8 +8,14 @@ import {
   MapPin,
   Pencil,
   Eye,
+  CalendarDays,
+  Search,
+  Utensils,
+  Trash2,
 } from "lucide-react";
-import api from "../../services/api";
+
+import { carregarDoacoes, salvarDoacoes } from "../../data/doacoes";
+
 import "./Doacoes.css";
 
 const formularioInicial = {
@@ -22,13 +28,6 @@ const formularioInicial = {
   localRetirada: "",
 };
 
-function obterUsuario() {
-  try {
-    return JSON.parse(localStorage.getItem("usuario")) || null;
-  } catch {
-    return null;
-  }
-}
 
 function dataLocalISO() {
   const hoje = new Date();
@@ -44,12 +43,7 @@ function formatarData(data) {
 
   const partes = String(data).split("-");
 
-  if (
-    partes.length === 3 &&
-    partes[0].length === 4 &&
-    partes[1].length === 2 &&
-    partes[2].length === 2
-  ) {
+  if (partes.length === 3 && partes[0].length === 4) {
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
   }
 
@@ -58,38 +52,25 @@ function formatarData(data) {
 
 function Doacoes() {
   const navigate = useNavigate();
-
-  const [doacoes, setDoacoes] = useState([]);
-  const [pesquisa, setPesquisa] = useState("");
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState("");
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [formulario, setFormulario] = useState({ ...formularioInicial });
-  const [salvando, setSalvando] = useState(false);
-  const [mensagem, setMensagem] = useState("");
-  const [tipoMensagem, setTipoMensagem] = useState("sucesso");
-  const [doacaoEditando, setDoacaoEditando] = useState(null);
-
-  const usuario = obterUsuario();
-
-  async function carregarDoacoes() {
-    try {
-      setCarregando(true);
-      setErro("");
-
-      const resposta = await api.get("/api/v1/doacoes");
-      setDoacoes(resposta.data);
-    } catch (error) {
-      console.error("Erro ao carregar doações:", error);
-      setErro("Não foi possível carregar as doações. Verifique o backend.");
-    } finally {
-      setCarregando(false);
-    }
-  }
+  const [doacoes, setDoacoes] = useState(() => carregarDoacoes());
 
   useEffect(() => {
-    carregarDoacoes();
-  }, []);
+    salvarDoacoes(doacoes);
+  }, [doacoes]);
+  const [pesquisa, setPesquisa] = useState("");
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [formulario, setFormulario] = useState({
+    ...formularioInicial,
+  });
+  const [doacaoEditando, setDoacaoEditando] = useState(null);
+  const [doacaoExpandida, setDoacaoExpandida] = useState(null);
+  const [mensagem, setMensagem] = useState("");
+  const [tipoMensagem, setTipoMensagem] = useState("sucesso");
+
+  function mostrarMensagem(texto, tipo = "sucesso") {
+    setMensagem(texto);
+    setTipoMensagem(tipo);
+  }
 
   function atualizarCampo(event) {
     const { name, value } = event.target;
@@ -98,11 +79,6 @@ function Doacoes() {
       ...anterior,
       [name]: value,
     }));
-  }
-
-  function mostrarMensagem(texto, tipo = "sucesso") {
-    setMensagem(texto);
-    setTipoMensagem(tipo);
   }
 
   function abrirCadastro() {
@@ -114,20 +90,12 @@ function Doacoes() {
   }
 
   function abrirEdicao(doacao) {
-    if (
-      !usuario?.id ||
-      Number(doacao.doador?.id) !== Number(usuario.id)
-    ) {
-      mostrarMensagem("Você só pode editar suas próprias doações.", "erro");
-      return;
-    }
-
     setDoacaoEditando(doacao);
 
     setFormulario({
-      nomeAlimento: doacao.nomeAlimento || "",
-      quantidade: doacao.quantidade ?? "",
-      unidade: doacao.unidade || "kg",
+      nomeAlimento: doacao.nomeAlimento,
+      quantidade: String(doacao.quantidade),
+      unidade: doacao.unidade,
       dataValidade: doacao.dataValidade || "",
       descricao: doacao.descricao || "",
       foto: doacao.foto || "",
@@ -145,29 +113,22 @@ function Doacoes() {
     setFormulario({ ...formularioInicial });
   }
 
-  async function salvarDoacao(event) {
+  function salvarDoacao(event) {
     event.preventDefault();
     setMensagem("");
 
-    const usuarioAtual = obterUsuario();
-
-    if (!usuarioAtual?.id) {
-      mostrarMensagem("Faça login novamente para continuar.", "erro");
-      return;
-    }
-
-    if (
-      doacaoEditando &&
-      Number(doacaoEditando.doador?.id) !== Number(usuarioAtual.id)
-    ) {
-      mostrarMensagem("Você não pode editar esta doação.", "erro");
-      return;
-    }
-
     const quantidade = Number(formulario.quantidade);
 
+    if (!formulario.nomeAlimento.trim()) {
+      mostrarMensagem("Informe o nome do alimento.", "erro");
+      return;
+    }
+
     if (!Number.isFinite(quantidade) || quantidade <= 0) {
-      mostrarMensagem("Informe uma quantidade maior que zero.", "erro");
+      mostrarMensagem(
+        "Informe uma quantidade maior que zero.",
+        "erro"
+      );
       return;
     }
 
@@ -175,7 +136,10 @@ function Doacoes() {
       formulario.dataValidade &&
       formulario.dataValidade < dataLocalISO()
     ) {
-      mostrarMensagem("A data de validade não pode estar no passado.", "erro");
+      mostrarMensagem(
+        "A data de validade não pode estar no passado.",
+        "erro"
+      );
       return;
     }
 
@@ -184,87 +148,82 @@ function Doacoes() {
       return;
     }
 
-    if (!formulario.nomeAlimento.trim()) {
-      mostrarMensagem("Informe o nome do alimento.", "erro");
-      return;
-    }
+    const dadosDoacao = {
+      nomeAlimento: formulario.nomeAlimento.trim(),
+      quantidade,
+      unidade: formulario.unidade,
+      dataValidade: formulario.dataValidade,
+      descricao: formulario.descricao.trim(),
+      foto: formulario.foto.trim(),
+      localRetirada: formulario.localRetirada.trim(),
+      status: doacaoEditando?.status || "Disponível",
+      doador: doacaoEditando?.doador || "Doador demonstrativo",
+    };
 
-    try {
-      setSalvando(true);
-
-      const dadosDoacao = {
-        nomeAlimento: formulario.nomeAlimento.trim(),
-        quantidade,
-        unidade: formulario.unidade,
-        dataValidade: formulario.dataValidade || null,
-        descricao: formulario.descricao.trim(),
-        foto: formulario.foto.trim(),
-        localRetirada: formulario.localRetirada.trim(),
-        status: doacaoEditando?.status || "Disponível",
-      };
-
-      if (doacaoEditando) {
-        await api.put(
-          `/api/v1/doacoes/${doacaoEditando.id}`,
-          dadosDoacao,
-          {
-            headers: {
-              "X-Usuario-Id": usuarioAtual.id,
-            },
-          }
-        );
-
-        mostrarMensagem("Doação atualizada com sucesso!");
-      } else {
-        await api.post("/api/v1/doacoes", {
-          ...dadosDoacao,
-          doador: {
-            id: usuarioAtual.id,
-          },
-        });
-
-        mostrarMensagem("Doação cadastrada com sucesso!");
-      }
-
-      setFormulario({ ...formularioInicial });
-      setDoacaoEditando(null);
-      setMostrarFormulario(false);
-
-      await carregarDoacoes();
-    } catch (error) {
-      console.error("Erro ao salvar doação:", error);
-
-      const status = error.response?.status;
-      let textoErro =
-        error.response?.data?.detail ||
-        error.response?.data?.message;
-
-      if (status === 403) {
-        textoErro = "Você não tem permissão para editar esta doação.";
-      } else if (status === 404) {
-        textoErro = "Doação ou usuário não encontrado.";
-      }
-
-      mostrarMensagem(
-        textoErro || "Não foi possível salvar a doação. Tente novamente.",
-        "erro"
+    if (doacaoEditando) {
+      setDoacoes((anteriores) =>
+        anteriores.map((doacao) =>
+          doacao.id === doacaoEditando.id
+            ? { ...doacao, ...dadosDoacao }
+            : doacao
+        )
       );
-    } finally {
-      setSalvando(false);
+
+      mostrarMensagem("Doação atualizada na demonstração!");
+    } else {
+      setDoacoes((anteriores) => [
+        {
+          id: Date.now(),
+          ...dadosDoacao,
+        },
+        ...anteriores,
+      ]);
+
+      mostrarMensagem("Doação adicionada à demonstração!");
     }
+
+    setMostrarFormulario(false);
+    setDoacaoEditando(null);
+    setFormulario({ ...formularioInicial });
   }
 
-  const termo = pesquisa.trim().toLowerCase();
+  function removerDoacao(doacao) {
+    const confirmar = window.confirm(
+      `Deseja realmente remover a doação de "${doacao.nomeAlimento}"?`
+    );
+
+    if (!confirmar) return;
+
+    setDoacoes((anteriores) =>
+      anteriores.filter((item) => item.id !== doacao.id)
+    );
+
+    if (doacaoExpandida === doacao.id) {
+      setDoacaoExpandida(null);
+    }
+
+    if (doacaoEditando?.id === doacao.id) {
+      fecharFormulario();
+    }
+
+    mostrarMensagem(
+      `A doação "${doacao.nomeAlimento}" foi removida da demonstração.`
+    );
+  }
+
+  const termo = pesquisa.trim().toLocaleLowerCase("pt-BR");
 
   const doacoesFiltradas = doacoes.filter((doacao) =>
     [
       doacao.nomeAlimento,
       doacao.descricao,
       doacao.status,
-      doacao.doador?.nome,
+      doacao.doador,
       doacao.localRetirada,
     ].some((valor) =>
-      String(valor ?? "").toLowerCase().includes(termo)
+      String(valor ?? "")
+        .toLocaleLowerCase("pt-BR")
+        .includes(termo)
     )
   );
 
@@ -291,7 +250,9 @@ function Doacoes() {
           }}
         >
           {mostrarFormulario ? <X size={19} /> : <Plus size={19} />}
-          {mostrarFormulario ? "Fechar formulário" : "Cadastrar doação"}
+          {mostrarFormulario
+            ? "Fechar formulário"
+            : "Cadastrar doação"}
         </button>
       </header>
 
@@ -309,12 +270,19 @@ function Doacoes() {
         <section className="doacoes-formulario-container">
           <div className="doacoes-formulario-titulo">
             <PackagePlus size={24} />
-            <h2>{doacaoEditando ? "Editar doação" : "Nova doação"}</h2>
+            <h2>
+              {doacaoEditando ? "Editar doação" : "Nova doação"}
+            </h2>
           </div>
 
-          <form className="doacoes-formulario" onSubmit={salvarDoacao}>
+          <form
+            className="doacoes-formulario"
+            onSubmit={salvarDoacao}
+          >
             <div className="doacoes-campo">
-              <label htmlFor="nomeAlimento">Nome do alimento *</label>
+              <label htmlFor="nomeAlimento">
+                Nome do alimento *
+              </label>
               <input
                 id="nomeAlimento"
                 name="nomeAlimento"
@@ -342,7 +310,9 @@ function Doacoes() {
             </div>
 
             <div className="doacoes-campo">
-              <label htmlFor="unidade">Unidade de medida *</label>
+              <label htmlFor="unidade">
+                Unidade de medida *
+              </label>
               <select
                 id="unidade"
                 name="unidade"
@@ -361,7 +331,9 @@ function Doacoes() {
             </div>
 
             <div className="doacoes-campo">
-              <label htmlFor="dataValidade">Data de validade</label>
+              <label htmlFor="dataValidade">
+                Data de validade
+              </label>
               <input
                 id="dataValidade"
                 name="dataValidade"
@@ -373,13 +345,15 @@ function Doacoes() {
             </div>
 
             <div className="doacoes-campo doacoes-campo-largo">
-              <label htmlFor="localRetirada">Local de retirada *</label>
+              <label htmlFor="localRetirada">
+                Local de retirada *
+              </label>
               <input
                 id="localRetirada"
                 name="localRetirada"
                 value={formulario.localRetirada}
                 onChange={atualizarCampo}
-                placeholder="Ex.: Barueri - SP"
+                placeholder="Ex.: Osasco - SP"
                 maxLength={255}
                 required
               />
@@ -418,25 +392,19 @@ function Doacoes() {
               <button
                 type="submit"
                 className="doacoes-botao-salvar"
-                disabled={salvando}
               >
-                {salvando
-                  ? "Salvando..."
-                  : doacaoEditando
-                    ? "Salvar alterações"
-                    : "Publicar doação"}
+                {doacaoEditando
+                  ? "Salvar alterações"
+                  : "Publicar doação"}
               </button>
 
-              {doacaoEditando && (
-                <button
-                  type="button"
-                  className="doacoes-botao-cancelar"
-                  onClick={fecharFormulario}
-                  disabled={salvando}
-                >
-                  Cancelar edição
-                </button>
-              )}
+              <button
+                type="button"
+                className="doacoes-botao-cancelar"
+                onClick={fecharFormulario}
+              >
+                Cancelar
+              </button>
             </div>
           </form>
         </section>
@@ -452,119 +420,143 @@ function Doacoes() {
         />
       </div>
 
-      {carregando ? (
-        <div className="doacoes-mensagem">
-          <p>Carregando doações...</p>
-        </div>
-      ) : erro ? (
-        <div className="doacoes-mensagem" role="alert">
-          <h2>Ops! Ocorreu um problema.</h2>
-          <p>{erro}</p>
-          <button type="button" onClick={carregarDoacoes}>
-            Tentar novamente
-          </button>
-        </div>
-      ) : doacoesFiltradas.length === 0 ? (
-        <div className="doacoes-mensagem">
+      <div className="doacoes-resumo">
+        <span>
+          <strong>{doacoesFiltradas.length}</strong>{" "}
+          {doacoesFiltradas.length === 1
+            ? "doação encontrada"
+            : "doações encontradas"}
+        </span>
+
+        <span>Alimentos que podem transformar vidas</span>
+      </div>
+
+      {doacoesFiltradas.length === 0 ? (
+        <section className="doacoes-mensagem">
+          <Search size={32} />
           <h2>Nenhuma doação encontrada</h2>
           <p>
-            {doacoes.length === 0
-              ? "Ainda não existem doações cadastradas."
-              : "Tente pesquisar usando outros termos."}
+            Tente pesquisar por outro alimento ou localização.
           </p>
-        </div>
+          <button
+            type="button"
+            onClick={() => setPesquisa("")}
+          >
+            Limpar pesquisa
+          </button>
+        </section>
       ) : (
-        <section className="doacoes-grid" aria-label="Lista de doações">
-          {doacoesFiltradas.map((doacao) => {
-            const minhaDoacao =
-              usuario?.id != null &&
-              Number(doacao.doador?.id) === Number(usuario.id);
+        <section
+          className="doacoes-grid"
+          aria-label="Lista de doações"
+        >
+          {doacoesFiltradas.map((doacao) => (
+            <article className="doacao-card" key={doacao.id}>
+              {doacao.foto && (
+                <img
+                  className="doacao-foto"
+                  src={doacao.foto}
+                  alt={doacao.nomeAlimento}
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
 
-            return (
-              <article className="doacao-card" key={doacao.id}>
-                {doacao.foto && (
-                  <img
-                    className="doacao-foto"
-                    src={doacao.foto}
-                    alt={doacao.nomeAlimento || "Alimento doado"}
-                    onError={(event) => {
-                      event.currentTarget.style.display = "none";
-                    }}
+              <div className="doacao-card-conteudo">
+                <div className="doacao-card-topo">
+                  <div className="doacao-icone">
+                    <Utensils size={25} />
+                  </div>
+
+                  <h2>{doacao.nomeAlimento}</h2>
+
+                  <span className="doacao-status">
+                    {doacao.status}
+                  </span>
+                </div>
+
+                <p>
+                  <strong>Doador:</strong> {doacao.doador}
+                </p>
+
+                <p>
+                  <strong>Quantidade:</strong>{" "}
+                  {doacao.quantidade} {doacao.unidade}
+                </p>
+
+                <p>
+                  <CalendarDays
+                    size={16}
+                    className="doacao-icone-texto"
                   />
+                  <strong> Validade:</strong>{" "}
+                  {formatarData(doacao.dataValidade)}
+                </p>
+
+                <p>
+                  <MapPin
+                    size={16}
+                    className="doacao-icone-texto"
+                  />
+                  <strong> Local de retirada:</strong>{" "}
+                  {doacao.localRetirada}
+                </p>
+
+                {doacaoExpandida === doacao.id && (
+                  <div className="doacao-detalhes">
+                    <p>
+                      <strong>Descrição:</strong>{" "}
+                      {doacao.descricao ||
+                        "Sem descrição informada."}
+                    </p>
+
+                    <p>
+                      <strong>Observação:</strong> Doação
+                      demonstrativa. Combine a retirada com o
+                      responsável antes de se deslocar.
+                    </p>
+                  </div>
                 )}
 
-                <div className="doacao-card-conteudo">
-                  <div className="doacao-card-topo">
-                    <h2>{doacao.nomeAlimento || "Alimento sem nome"}</h2>
+                <div className="doacao-acoes">
+                  <button
+                    type="button"
+                    className="doacoes-botao-editar"
+                    onClick={() => navigate(`/doacoes/${doacao.id}`)}
+                  >
+                    <Eye size={16} />
+                    Ver detalhes
+                  </button>
 
-                    {doacao.status && (
-                      <span className="doacao-status">
-                        {doacao.status}
-                      </span>
-                    )}
-                  </div>
+                  <button
+                    type="button"
+                    className="doacoes-botao-editar"
+                    onClick={() => abrirEdicao(doacao)}
+                  >
+                    <Pencil size={16} />
+                    Editar
+                  </button>
 
-                  <p>
-                    <strong>Doador:</strong>{" "}
-                    {doacao.doador?.nome || "Doador não informado"}
-                  </p>
-
-                  <p>
-                    <strong>Quantidade:</strong>{" "}
-                    {doacao.quantidade ?? "Não informada"}{" "}
-                    {doacao.unidade || ""}
-                  </p>
-
-                  <p>
-                    <strong>Validade:</strong>{" "}
-                    {formatarData(doacao.dataValidade)}
-                  </p>
-
-                  <p>
-                    <MapPin
-                      size={16}
-                      style={{
-                        display: "inline",
-                        verticalAlign: "middle",
-                        marginRight: 4,
-                      }}
-                    />
-                    <strong>Local de retirada:</strong>{" "}
-                    {doacao.localRetirada || "Não informado"}
-                  </p>
-
-                  <p className="doacao-descricao">
-                    <strong>Descrição:</strong>{" "}
-                    {doacao.descricao || "Sem descrição informada."}
-                  </p>
-
-                  <div className="doacao-acoes">
-                    <button
-                      type="button"
-                      className="doacoes-botao-editar"
-                      onClick={() => navigate(`/doacoes/${doacao.id}`)}
-                    >
-                      <Eye size={16} />
-                      Ver detalhes
-                    </button>
-
-                    {minhaDoacao && (
-                      <button
-                        type="button"
-                        className="doacoes-botao-editar"
-                        onClick={() => abrirEdicao(doacao)}
-                      >
-                        <Pencil size={16} />
-                        Editar
-                      </button>
-                    )}
-                  </div>
+                  <button
+                    type="button"
+                    className="doacoes-botao-remover"
+                    onClick={() => removerDoacao(doacao)}
+                  >
+                    <Trash2 size={16} />
+                    Remover
+                  </button>
                 </div>
-              </article>
-            );
-          })}
+              </div>
+            </article>
+          ))}
         </section>
       )}
+
+      <p className="doacoes-aviso">
+        Os dados exibidos são fictícios e servem apenas para a
+        demonstração visual do Harvest Hope.
+      </p>
     </main>
   );
 }

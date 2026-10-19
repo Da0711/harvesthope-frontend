@@ -1,49 +1,74 @@
+css
+/* ========================================
+   CONTAINER PRINCIPAL
+======================================== */
 
 .detalhes-container {
   min-height: 100vh;
-  padding: 32px 24px;
+  box-sizing: border-box;
+  padding: 36px 24px 48px;
   background: #f7f5ef;
   color: #285b46;
-  box-sizing: border-box;
 }
 
 .detalhes-header,
 .detalhes-conteudo {
-  max-width: 1100px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1116px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
+/* ========================================
+   CABEÇALHO
+======================================== */
+
 .detalhes-header {
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
 .detalhes-voltar {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: 9px;
+  margin-bottom: 30px;
   color: #285b46;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .detalhes-voltar:hover {
+  color: #1b4332;
   text-decoration: underline;
+}
+
+.detalhes-voltar:focus-visible {
+  outline: 2px solid #285b46;
+  outline-offset: 4px;
+  border-radius: 3px;
 }
 
 .detalhes-header h1 {
   margin: 0 0 10px;
+  color: #285b46;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 34px;
+  font-size: clamp(30px, 4vw, 38px);
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .detalhes-header > p {
   margin: 0;
   color: #62685f;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.7;
 }
+
+/* ========================================
+   CONTEÚDO E COLUNAS
+======================================== */
 
 .detalhes-conteudo {
   display: grid;
@@ -52,180 +77,277 @@
   gap: 28px;
 }
 
+/* ========================================
+   IMAGEM DO ALIMENTO
+======================================== */
+
 .detalhes-imagem {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
   min-height: 320px;
   overflow: hidden;
-  border-radius: 8px;
+  border: 1px solid #e6e0d3;
+  border-radius: 10px;
   background: #e9e3d6;
 }
 
 .detalhes-imagem img {
   display: block;
   width: 100%;
-  height: 320px;
+  height: 100%;
+  min-height: 320px;
+  max-height: 520px;
   object-fit: cover;
 }
 
 .detalhes-imagem-placeholder {
   display: flex;
-  min-height: 320px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  color: #668b75;
+  gap: 16px;
+  width: 100%;
+  min-height: 320px;
+  padding: 24px;
+  box-sizing: border-box;
+  color: #648b78;
   text-align: center;
 }
 
+.detalhes-imagem-placeholder svg {
+  flex-shrink: 0;
+}
+
+.detalhes-imagem-placeholder span {
+  color: #62685f;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ========================================
+   INFORMAÇÕES DA DOAÇÃO
+======================================== */
+
 .detalhes-informacoes {
-  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 16px;
 }
 
 .detalhes-status {
-  display: inline-block;
-  padding: 5px 12px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
   border-radius: 20px;
   background: #285b46;
-  color: white;
+  color: #fff;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .detalhes-informacoes > h2 {
-  margin: 14px 0;
+  margin: 0;
+  color: #285b46;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 30px;
   font-weight: 500;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .detalhes-descricao {
+  margin: 0;
   color: #51564f;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
 }
+
+/* ========================================
+   QUANTIDADE E VALIDADE
+======================================== */
 
 .detalhes-dados {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin: 22px 0;
+  margin-top: 4px;
 }
 
 .detalhes-dado {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 16px;
-  border-radius: 7px;
+  gap: 12px;
+  min-width: 0;
+  min-height: 86px;
+  padding: 18px 16px;
+  box-sizing: border-box;
+  border: 1px solid #ded8cb;
+  border-radius: 8px;
   background: #e9e3d6;
 }
 
 .detalhes-dado > svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
+  color: #285b46;
 }
 
-.detalhes-dado div {
+.detalhes-dado > div {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  min-width: 0;
 }
 
 .detalhes-dado strong {
+  color: #3d5748;
   font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .detalhes-dado span {
   color: #285b46;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-.detalhes-doador,
-.detalhes-retirada {
-  margin-top: 16px;
-  padding: 18px;
-  border-radius: 7px;
+/* ========================================
+   DOADOR
+======================================== */
+
+.detalhes-doador {
+  padding: 20px;
+  border: 1px solid #ded8cb;
+  border-radius: 8px;
   background: #e9e3d6;
 }
 
 .detalhes-doador h3 {
-  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: #285b46;
   font-family: Georgia, "Times New Roman", serif;
+  font-size: 19px;
   font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-.detalhes-doador p,
-.detalhes-retirada p {
+.detalhes-doador h3 svg {
+  flex-shrink: 0;
+}
+
+.detalhes-doador p {
   margin: 0;
-  color: #51564f;
+  color: #62685f;
   font-size: 14px;
   line-height: 1.6;
+}
+
+/* ========================================
+   LOCAL DE RETIRADA
+======================================== */
+
+.detalhes-retirada {
+  padding: 20px;
+  border: 1px solid #ded8cb;
+  border-radius: 8px;
+  background: #e9e3d6;
 }
 
 .detalhes-retirada h3 {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 10px;
-  font-size: 15px;
+  gap: 9px;
+  margin: 0 0 12px;
+  color: #285b46;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
 }
+
+.detalhes-retirada h3 svg {
+  flex-shrink: 0;
+}
+
+.detalhes-retirada p {
+  margin: 0;
+  color: #51564f;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   AVISOS
+======================================== */
 
 .detalhes-aviso {
-  margin: 20px 0;
-  padding: 14px;
+  padding: 15px 17px;
+  border-left: 4px solid #cfa64d;
   border-radius: 5px;
-  background: #e9e3d6;
-  color: #51564f;
-  font-size: 12px;
-  line-height: 1.6;
+  background: #eee7d8;
+  color: #55584f;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
-.detalhes-botao-solicitar {
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 5px;
-  background: #285b46;
-  color: white;
-  font-size: 14px;
+/* Aviso de confirmação da solicitação.
+   Aplicado somente quando role="status". */
+
+.detalhes-aviso[role="status"] {
+  border: 1px solid #b7d3bd;
+  border-left: 4px solid #347451;
+  background: #e6f1e7;
+  color: #24563b;
   font-weight: 600;
+}
+
+/* ========================================
+   BOTÃO SOLICITAR
+======================================== */
+
+.detalhes-botao-solicitar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 48px;
+  padding: 14px 20px;
+  border: 1px solid #285b46;
+  border-radius: 6px;
+  background: #285b46;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .detalhes-botao-solicitar:hover:not(:disabled) {
-  background: #1b4332;
-}
-
-.detalhes-botao-solicitar:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-@media (max-width: 700px) {
-  .detalhes-container {
-    padding: 24px 16px;
+  transform: none;
   }
-
-  .detalhes-header h1 {
-    font-size: 29px;
-  }
-
-  .detalhes-conteudo {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .detalhes-imagem,
-  .detalhes-imagem-placeholder {
-    min-height: 240px;
-  }
-
-  .detalhes-imagem img {
-    height: 240px;
-  }
-
-  .detalhes-dados {
-    grid-template-columns: 1fr;
-  }
+  
+.detalhes-aviso[role="status"] {
+  margin-bottom: -4px;
 }
