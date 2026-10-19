@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   MapPin,
@@ -12,32 +13,44 @@ import {
 import { buscarDoacaoPorId } from "../../data/doacoes";
 import "./DetalhesDoacao.css";
 
+const CHAVE_SOLICITACOES = "harvesthope_solicitacoes";
+
 function formatarData(data) {
-  if (!data) {
-    return "Não informada";
-  }
+  if (!data) return "Não informada";
 
   const partes = String(data).split("-");
 
-  if (
-    partes.length === 3 &&
-    partes[0].length === 4 &&
-    partes[1].length === 2 &&
-    partes[2].length === 2
-  ) {
+  if (partes.length === 3 && partes[0].length === 4) {
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
   }
 
   return data;
 }
 
+function carregarSolicitacoes() {
+  try {
+    const dados = JSON.parse(
+      localStorage.getItem(CHAVE_SOLICITACOES) || "[]"
+    );
+
+    return Array.isArray(dados) ? dados : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function DetalhesDoacao() {
   const { id } = useParams();
-
-  const [solicitacaoEnviada, setSolicitacaoEnviada] =
-    useState(false);
+  const navigate = useNavigate();
 
   const doacao = buscarDoacaoPorId(id);
+
+  const [solicitacaoEnviada, setSolicitacaoEnviada] = useState(
+    () =>
+      carregarSolicitacoes().some(
+        (item) => String(item.doacaoId) === String(id)
+      )
+  );
 
   if (!doacao) {
     return (
@@ -49,7 +62,6 @@ export default function DetalhesDoacao() {
           </Link>
 
           <h1>Doação não encontrada</h1>
-
           <p>
             Não encontramos essa doação. Volte à listagem
             e selecione um alimento.
@@ -65,22 +77,70 @@ export default function DetalhesDoacao() {
       : doacao.doador?.nome || "Doador demonstrativo";
 
   const doadorTipo =
-    typeof doacao.doador === "object" &&
-    doacao.doador !== null
+    typeof doacao.doador === "object" && doacao.doador !== null
       ? doacao.doador.tipoUsuario || "Doador de alimentos"
       : "Doador de alimentos";
 
   function solicitarDoacao() {
     if (solicitacaoEnviada) {
+      navigate("/solicitacoes");
       return;
     }
 
-    const confirmar = window.confirm(
-      `Deseja solicitar a doação de ${doacao.nomeAlimento}?`
-    );
+    if (
+      !window.confirm(
+        `Deseja solicitar a doação de ${doacao.nomeAlimento}?`
+      )
+    ) {
+      return;
+    }
 
-    if (confirmar) {
+    try {
+      const solicitacoes = carregarSolicitacoes();
+
+      const jaExiste = solicitacoes.some(
+        (item) => String(item.doacaoId) === String(doacao.id)
+      );
+
+      if (jaExiste) {
+        setSolicitacaoEnviada(true);
+        window.alert("Você já solicitou esta doação.");
+        navigate("/solicitacoes");
+        return;
+      }
+
+      const novaSolicitacao = {
+        id: `SOL-${Date.now()}`,
+        doacaoId: doacao.id,
+        nomeAlimento: doacao.nomeAlimento,
+        quantidade: doacao.quantidade,
+        unidade: doacao.unidade,
+        dataValidade: doacao.dataValidade,
+        localRetirada: doacao.localRetirada,
+        doador: doadorNome,
+        instituicao: "Não informada",
+        data: new Date().toLocaleDateString("pt-BR"),
+        criadaEm: new Date().toISOString(),
+        status: "Pendente",
+      };
+
+      const atualizadas = [...solicitacoes, novaSolicitacao];
+
+      localStorage.setItem(
+        CHAVE_SOLICITACOES,
+        JSON.stringify(atualizadas)
+      );
+
       setSolicitacaoEnviada(true);
+
+      window.alert("Solicitação registrada com sucesso!");
+
+      navigate("/solicitacoes");
+    } catch (erro) {
+      console.error("Erro ao salvar solicitação:", erro);
+      window.alert(
+        "Não foi possível salvar a solicitação. Tente novamente."
+      );
     }
   }
 
@@ -126,14 +186,12 @@ export default function DetalhesDoacao() {
           <h2>{doacao.nomeAlimento}</h2>
 
           <p className="detalhes-descricao">
-            {doacao.descricao ||
-              "Nenhuma descrição foi informada."}
+            {doacao.descricao || "Nenhuma descrição foi informada."}
           </p>
 
           <div className="detalhes-dados">
             <div className="detalhes-dado">
               <Package size={19} />
-
               <div>
                 <strong>Quantidade</strong>
                 <span>
@@ -144,12 +202,9 @@ export default function DetalhesDoacao() {
 
             <div className="detalhes-dado">
               <CalendarDays size={19} />
-
               <div>
                 <strong>Validade informada</strong>
-                <span>
-                  {formatarData(doacao.dataValidade)}
-                </span>
+                <span>{formatarData(doacao.dataValidade)}</span>
               </div>
             </div>
           </div>
@@ -166,7 +221,6 @@ export default function DetalhesDoacao() {
               />
               {doadorNome}
             </h3>
-
             <p>{doadorTipo}</p>
           </div>
 
@@ -175,22 +229,17 @@ export default function DetalhesDoacao() {
               <MapPin size={18} />
               Local de retirada
             </h3>
-
-            <p>
-              {doacao.localRetirada || "Local não informado"}
-            </p>
+            <p>{doacao.localRetirada || "Local não informado"}</p>
           </div>
 
           <div className="detalhes-aviso">
-            Os dados são armazenados localmente neste navegador
-            para a demonstração do frontend. Confira as condições
-            dos alimentos antes de combinar uma retirada.
+            As solicitações são armazenadas localmente neste navegador
+            para demonstração. Nenhuma solicitação real é enviada.
           </div>
 
           {solicitacaoEnviada && (
             <div className="detalhes-aviso" role="status">
-              Solicitação demonstrativa registrada com sucesso!
-              Nenhuma solicitação real foi enviada.
+              Você já solicitou esta doação.
             </div>
           )}
 
@@ -198,10 +247,9 @@ export default function DetalhesDoacao() {
             type="button"
             className="detalhes-botao-solicitar"
             onClick={solicitarDoacao}
-            disabled={solicitacaoEnviada}
           >
             {solicitacaoEnviada
-              ? "Solicitação registrada"
+              ? "Ver minhas solicitações"
               : "Solicitar doação"}
           </button>
         </div>

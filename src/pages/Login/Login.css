@@ -1,773 +1,713 @@
+
 /* =========================================
-   HARVEST HOPE - LOGIN
+   HARVEST HOPE — LOGIN
    ========================================= */
 
 .login-page {
-  min-height: 100vh;
-  width: 100%;
+  --login-verde-escuro: #173f35;
+  --login-verde: #285c4d;
+  --login-verde-claro: #e6eee8;
+  --login-creme: #f7f5ed;
+  --login-texto: #25352e;
+  --login-secundario: #77827b;
+  --login-borda: #e1e6df;
+  --login-erro: #b84040;
 
   display: flex;
-
-  background: #f4f7f5;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--login-creme);
+  color: var(--login-texto);
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-
 /* =========================================
-   PAINEL ESQUERDO - IMAGEM
+   PAINEL VISUAL
    ========================================= */
 
 .login-showcase {
   position: relative;
-
-  width: 50%;
-  min-height: 100vh;
-
+  isolation: isolate;
   display: flex;
   align-items: center;
-
+  width: 51%;
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
-
-  padding: 70px;
-
+  padding: 72px clamp(35px, 6vw, 90px);
+  background-color: var(--login-verde-escuro);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-
-  color: #ffffff;
+  color: #fff;
 }
 
+.login-showcase::after {
+  position: absolute;
+  z-index: -1;
+  right: -130px;
+  bottom: -180px;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
 
-/* Camada escura sobre a imagem */
 .showcase-overlay {
   position: absolute;
-
+  z-index: -1;
   inset: 0;
-
   background:
     linear-gradient(
-      135deg,
-      rgba(12, 55, 37, 0.82),
-      rgba(17, 73, 47, 0.52)
+      90deg,
+      rgba(14, 43, 34, 0.88) 0%,
+      rgba(20, 57, 43, 0.72) 58%,
+      rgba(20, 57, 43, 0.45) 100%
     );
-
-  z-index: 1;
 }
-
-
-/* =========================================
-   CONTEÚDO DO PAINEL ESQUERDO
-   ========================================= */
 
 .showcase-content {
-  position: relative;
-
-  z-index: 2;
-
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
+  margin: auto 0;
+  animation: login-aparecer 0.65s ease both;
 }
 
-
-/* =========================================
-   LOGO
-   ========================================= */
+/* Logo da imagem */
 
 .showcase-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-
   gap: 12px;
-
-  margin-bottom: 28px;
+  margin-bottom: 64px;
+  color: #fff;
+  text-decoration: none;
 }
 
-.showcase-logo svg {
+.showcase-logo-icon {
+  display: grid;
+  width: 49px;
+  height: 49px;
   flex-shrink: 0;
-
-  color: #ffffff;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e1eadb;
 }
 
 .showcase-logo h1 {
   margin: 0;
-
-  color: #ffffff;
-
-  font-size: 42px;
-  font-weight: 700;
-
-  line-height: 1;
-
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 600;
   letter-spacing: -1.5px;
+  line-height: 1;
 }
 
 .showcase-logo h1 span {
-  color: #91d3a9;
+  color: #d4e1c9;
 }
 
+/* Texto principal */
 
-/* =========================================
-   FRASE PRINCIPAL
-   ========================================= */
+.showcase-label {
+  display: block;
+  margin-bottom: 18px;
+  color: #d5e2d2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  line-height: 1.7;
+}
 
 .showcase-description {
   margin: 0;
-
-  color: #f4faf6;
-
-  font-size: 22px;
-  line-height: 1.5;
-
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4vw, 55px);
   font-weight: 400;
+  letter-spacing: -1.2px;
+  line-height: 1.17;
 }
-
-
-/* =========================================
-   LINHA DECORATIVA
-   ========================================= */
 
 .showcase-line {
-  width: 48px;
+  width: 54px;
   height: 3px;
-
-  margin: 28px 0;
-
+  margin: 30px 0;
   border-radius: 10px;
-
-  background: #ffffff;
+  background: #d5e2c8;
 }
 
-
-/* =========================================
-   BENEFÍCIOS
-   ========================================= */
+/* Benefícios */
 
 .showcase-benefits {
   display: flex;
   flex-direction: column;
-
-  gap: 18px;
+  gap: 19px;
 }
 
 .benefit {
   display: flex;
   align-items: center;
-
-  gap: 14px;
-
-  color: #ffffff;
-
-  font-size: 15px;
-  font-weight: 400;
+  gap: 13px;
+  color: rgba(255, 255, 255, 0.91);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .benefit svg {
   flex-shrink: 0;
-
-  color: #a8dfb9;
+  color: #d5e2c8;
 }
 
-.heart-icon {
-  width: 20px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #ffffff;
-
-  font-size: 21px;
-}
-
-
-/* =========================================
-   CAIXA DE MENSAGEM
-   ========================================= */
+/* Mensagem */
 
 .showcase-message {
-  width: fit-content;
-
   display: flex;
   align-items: center;
-
   gap: 15px;
-
-  margin-top: 55px;
-
-  padding: 18px 22px;
-
-  border: 1px solid rgba(255, 255, 255, 0.25);
-
-  border-radius: 18px;
-
-  background: rgba(0, 0, 0, 0.18);
-
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 48px;
+  padding: 17px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  background: rgba(14, 35, 28, 0.32);
   backdrop-filter: blur(8px);
 }
 
-.showcase-message svg {
+.showcase-message-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-
-  color: #a8dfb9;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e1eadb;
 }
 
 .showcase-message p {
   margin: 0;
-
-  color: #f4faf6;
-
-  font-size: 14px;
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 12px;
+  line-height: 1.7;
 }
 
+.showcase-caption {
+  position: absolute;
+  right: 28px;
+  bottom: 22px;
+  left: 28px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
 
 /* =========================================
-   PAINEL DIREITO
+   PAINEL DO FORMULÁRIO
    ========================================= */
 
 .login-form-section {
   position: relative;
-
-  width: 50%;
-  min-height: 100vh;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 49%;
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
-
-  padding: 50px;
-
-  background: #ffffff;
+  padding: 56px clamp(28px, 5vw, 78px);
+  background: var(--login-creme);
 }
 
-
-/* =========================================
-   DECORAÇÕES DO FUNDO
-   ========================================= */
+.login-form-section::before,
+.login-form-section::after {
+  position: absolute;
+  z-index: 0;
+  border: 1px solid rgba(40, 92, 77, 0.07);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
 
 .login-form-section::before {
-  content: "";
-
-  position: absolute;
-
-  width: 330px;
-  height: 330px;
-
-  right: -140px;
-  bottom: -150px;
-
-  border-radius: 50%;
-
-  background: rgba(66, 139, 91, 0.13);
-
-  transform: rotate(25deg);
-
-  pointer-events: none;
+  top: -155px;
+  right: -155px;
+  width: 340px;
+  height: 340px;
 }
 
 .login-form-section::after {
-  content: "";
-
-  position: absolute;
-
-  width: 210px;
-  height: 210px;
-
-  left: -130px;
-  top: -100px;
-
-  border-radius: 50%;
-
-  background: rgba(66, 139, 91, 0.08);
-
-  pointer-events: none;
+  bottom: -210px;
+  left: -190px;
+  width: 390px;
+  height: 390px;
 }
-
-
-/* =========================================
-   CONTAINER DO FORMULÁRIO
-   ========================================= */
 
 .login-form-container {
   position: relative;
-
-  z-index: 2;
-
+  z-index: 1;
   width: 100%;
-  max-width: 430px;
+  max-width: 400px;
+  margin: auto;
+  animation: login-aparecer 0.65s 0.08s ease both;
 }
 
-
-/* =========================================
-   LOGO DO FORMULÁRIO
-   ========================================= */
+/* Logo do formulário */
 
 .login-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-
-  gap: 8px;
-
-  margin-bottom: 55px;
-
-  color: #174a32;
+  gap: 10px;
+  margin-bottom: 58px;
+  text-decoration: none;
 }
 
-.login-logo svg {
-  color: #2e7d52;
+.login-logo-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #d8e2d7;
+  border-radius: 13px;
+  background: #edf1e7;
+  color: var(--login-verde);
 }
 
-.login-logo > span {
-  color: #174a32;
-
-  font-size: 26px;
-  font-weight: 700;
-
-  line-height: 1;
-
+.login-logo-text {
+  color: var(--login-verde-escuro);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-weight: 600;
   letter-spacing: -0.8px;
+  line-height: 1;
 }
 
-.login-logo > span span {
-  color: #2e7d52;
+.login-logo-text span {
+  color: var(--login-verde);
 }
 
-
-/* =========================================
-   CABEÇALHO
-   ========================================= */
+/* Cabeçalho */
 
 .login-header {
-  margin-bottom: 30px;
+  margin-bottom: 34px;
+}
+
+.login-eyebrow {
+  display: block;
+  margin-bottom: 13px;
+  color: var(--login-verde);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
 }
 
 .login-header h2 {
-  margin: 0 0 8px;
-
-  color: #111b16;
-
-  font-size: 38px;
-  font-weight: 700;
-
-  line-height: 1.15;
-
-  letter-spacing: -1.2px;
+  margin: 0 0 12px;
+  color: var(--login-verde-escuro);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 3.5vw, 44px);
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  line-height: 1.12;
 }
 
 .login-header p {
   margin: 0;
-
-  color: #7c8781;
-
-  font-size: 16px;
-  font-weight: 400;
-
-  line-height: 1.5;
+  color: var(--login-secundario);
+  font-size: 14px;
+  line-height: 1.8;
 }
 
-
 /* =========================================
-   FORMULÁRIO
+   CAMPOS DO FORMULÁRIO
    ========================================= */
 
 .login-form {
-  width: 100%;
-
   display: flex;
   flex-direction: column;
-
-  gap: 16px;
+  gap: 22px;
+  width: 100%;
 }
 
+.login-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
-/* =========================================
-   INPUTS
-   ========================================= */
+.login-field > label,
+.login-label-row > label {
+  display: block;
+  margin-bottom: 9px;
+  color: #34483e;
+  font-size: 12px;
+  font-weight: 650;
+}
 
-.modern-input {
-  width: 100%;
-  height: 58px;
-
+.login-label-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 
-  gap: 13px;
+.forgot-password-inline {
+  margin-bottom: 9px;
+  color: var(--login-verde);
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
 
-  padding: 0 18px;
+.forgot-password-inline:hover {
+  color: var(--login-verde-escuro);
+  text-decoration: underline;
+}
 
-  border: 1px solid #dce2df;
-  border-radius: 13px;
-
-  background: #ffffff;
-
-  color: #53625b;
-
+.modern-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 55px;
+  padding: 0 16px;
+  border: 1px solid #dfe4dc;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #748078;
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .modern-input:hover {
-  border-color: #c4cec9;
+  border-color: #c2cec3;
+  background: #fff;
 }
 
 .modern-input:focus-within {
-  border-color: #2e7d52;
-
-  box-shadow:
-    0 0 0 4px rgba(46, 125, 82, 0.08);
+  border-color: var(--login-verde);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(40, 92, 77, 0.09);
 }
 
 .modern-input svg {
   flex-shrink: 0;
-
-  color: #53625b;
+  color: #738278;
 }
 
 .modern-input input {
   width: 100%;
+  min-width: 0;
   height: 100%;
-
   padding: 0;
-
-  border: none;
+  border: 0;
   outline: none;
-
   background: transparent;
-
-  color: #26332d;
-
-  font-family: inherit;
-  font-size: 15px;
+  color: var(--login-texto);
+  font: inherit;
+  font-size: 13px;
 }
 
 .modern-input input::placeholder {
-  color: #a4ada8;
+  color: #a1aaa2;
 }
 
+.modern-input input:-webkit-autofill,
+.modern-input input:-webkit-autofill:hover,
+.modern-input input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--login-texto);
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Erros de validação */
+
+.modern-input.input-error {
+  border-color: var(--login-erro);
+  background: #fffafa;
+}
+
+.modern-input.input-error:focus-within {
+  box-shadow: 0 0 0 4px rgba(184, 64, 64, 0.09);
+}
+
+.modern-input.input-error svg {
+  color: var(--login-erro);
+}
+
+.error-message {
+  display: block;
+  margin: 7px 0 0 2px;
+  color: var(--login-erro);
+  font-size: 11px;
+  line-height: 1.5;
+}
 
 /* =========================================
-   ESQUECEU A SENHA
-   ========================================= */
-
-.forgot-password {
-  display: flex;
-  justify-content: flex-end;
-
-  margin-top: 1px;
-}
-
-.forgot-password a {
-  color: #246442;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  text-decoration: none;
-
-  transition: color 0.2s ease;
-}
-
-.forgot-password a:hover {
-  color: #174a32;
-
-  text-decoration: underline;
-}
-
-
-/* =========================================
-   BOTÃO ENTRAR
+   BOTÃO PRINCIPAL
    ========================================= */
 
 .primary-button {
-  width: 100%;
-  height: 56px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 12px;
-
-  margin-top: 8px;
-
-  border: none;
-  border-radius: 13px;
-
-  background: #2e7d52;
-
-  color: #ffffff;
-
+  width: 100%;
+  min-height: 54px;
+  margin-top: 5px;
+  padding: 12px 18px;
+  border: 1px solid var(--login-verde-escuro);
+  border-radius: 11px;
+  background: var(--login-verde-escuro);
+  color: #fff;
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 600;
-
+  font-size: 13px;
+  font-weight: 650;
   cursor: pointer;
-
   transition:
     background-color 0.2s ease,
+    border-color 0.2s ease,
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.primary-button:hover {
-  background: #246442;
-
-  box-shadow:
-    0 8px 20px rgba(46, 125, 82, 0.18);
-
-  transform: translateY(-1px);
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #245547;
+  background: #245547;
+  box-shadow: 0 8px 18px rgba(23, 63, 53, 0.15);
 }
 
-.primary-button:active {
+.primary-button:active:not(:disabled) {
   transform: translateY(0);
-
   box-shadow: none;
 }
 
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .primary-button svg {
+  flex-shrink: 0;
   transition: transform 0.2s ease;
 }
 
-.primary-button:hover svg {
+.primary-button:hover:not(:disabled) svg {
   transform: translateX(3px);
 }
 
-
 /* =========================================
-   DIVISOR
+   DIVISOR E CADASTRO
    ========================================= */
 
 .login-divider {
-  width: 100%;
-
   display: flex;
   align-items: center;
-
   gap: 15px;
-
-  margin: 28px 0;
+  width: 100%;
+  margin: 27px 0 21px;
 }
 
 .login-divider span {
   flex: 1;
-
   height: 1px;
-
-  background: #dce2df;
+  background: #dfe4dc;
 }
 
 .login-divider p {
   margin: 0;
-
-  color: #8b9590;
-
-  font-size: 14px;
+  color: #909a91;
+  font-size: 11px;
 }
 
-
-/* =========================================
-   BOTÃO CRIAR CONTA
-   ========================================= */
-
 .secondary-button {
-  width: 100%;
-  height: 54px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 10px;
-
-  border: 1px solid #2e7d52;
-  border-radius: 13px;
-
-  background: #ffffff;
-
-  color: #205b3c;
-
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 18px;
+  border: 1px solid #cbd7ca;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--login-verde-escuro);
   font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-
+  font-size: 12px;
+  font-weight: 650;
   text-decoration: none;
-
   transition:
+    border-color 0.2s ease,
     background-color 0.2s ease,
-    color 0.2s ease,
     transform 0.2s ease;
 }
 
 .secondary-button:hover {
-  background: #f0f7f3;
-
-  color: #174a32;
-
   transform: translateY(-1px);
+  border-color: var(--login-verde);
+  background: #fff;
 }
 
-.secondary-button:active {
-  transform: translateY(0);
+.secondary-button svg {
+  color: var(--login-verde);
 }
 
+.login-footer {
+  margin: 27px 0 0;
+  color: #879188;
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: center;
+}
 
 /* =========================================
-   RESPONSIVIDADE - TABLET
+   ANIMAÇÃO
    ========================================= */
 
-@media (max-width: 1000px) {
+@keyframes login-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   TABLETS
+   ========================================= */
+
+@media (max-width: 1050px) {
   .login-showcase {
-    width: 45%;
-
-    padding: 45px;
+    width: 46%;
+    padding: 48px 35px;
   }
 
   .login-form-section {
-    width: 55%;
-
-    padding: 40px;
+    width: 54%;
+    padding: 42px 35px;
   }
 
-  .showcase-logo h1 {
-    font-size: 34px;
+  .showcase-logo {
+    margin-bottom: 48px;
   }
 
   .showcase-description {
-    font-size: 18px;
+    font-size: clamp(32px, 4vw, 43px);
   }
 
-  .login-header h2 {
-    font-size: 33px;
+  .showcase-message {
+    margin-top: 35px;
   }
 
+  .login-logo {
+    margin-bottom: 45px;
+  }
 }
 
-
-/* =========================================
-   RESPONSIVIDADE - TABLET PEQUENO
-   ========================================= */
-
-@media (max-width: 800px) {
-
+@media (max-width: 780px) {
   .login-showcase {
-    width: 40%;
-
-    padding: 30px;
+    width: 42%;
+    padding: 32px 25px;
   }
 
   .login-form-section {
-    width: 60%;
+    width: 58%;
+    padding: 35px 25px;
+  }
 
-    padding: 30px;
+  .showcase-logo {
+    gap: 9px;
+    margin-bottom: 40px;
   }
 
   .showcase-logo h1 {
     font-size: 29px;
   }
 
-  .showcase-description {
-    font-size: 16px;
+  .showcase-logo-icon {
+    width: 40px;
+    height: 40px;
   }
 
-  .showcase-message {
-    padding: 14px 16px;
-  }
-
-  .showcase-message p {
-    font-size: 12px;
-  }
-
-}
-
-
-/* =========================================
-   RESPONSIVIDADE - CELULAR
-   ========================================= */
-
-@media (max-width: 700px) {
-
-  .login-page {
-    flex-direction: column;
-  }
-
-  .login-showcase {
-    width: 100%;
-    min-height: 340px;
-
-    padding: 40px 25px;
-
-    align-items: center;
-  }
-
-  .login-form-section {
-    width: 100%;
-    min-height: auto;
-
-    padding: 45px 25px;
-  }
-
-  .showcase-content {
-    max-width: 600px;
-  }
-
-  .showcase-logo h1 {
-    font-size: 32px;
+  .showcase-label {
+    font-size: 9px;
+    letter-spacing: 1.4px;
   }
 
   .showcase-description {
-    font-size: 18px;
-  }
-
-  .showcase-benefits {
-    gap: 12px;
+    font-size: 33px;
   }
 
   .showcase-message {
-    margin-top: 30px;
+    gap: 10px;
+    padding: 13px;
   }
 
-  .login-logo {
-    margin-bottom: 35px;
-  }
-
-  .login-header h2 {
-    font-size: 31px;
-  }
-
-}
-
-
-/* =========================================
-   CELULARES PEQUENOS
-   ========================================= */
-
-@media (max-width: 430px) {
-
-  .login-showcase {
-    min-height: 300px;
-
-    padding: 30px 20px;
-  }
-
-  .showcase-logo {
-    margin-bottom: 18px;
-  }
-
-  .showcase-logo h1 {
-    font-size: 28px;
-  }
-
-  .showcase-logo svg {
+  .showcase-message-icon {
     width: 34px;
     height: 34px;
   }
 
+  .showcase-message p {
+    font-size: 11px;
+  }
+
+  .login-logo {
+    margin-bottom: 38px;
+  }
+
+  .login-header h2 {
+    font-size: 36px;
+  }
+}
+
+/* =========================================
+   CELULARES
+   ========================================= */
+
+@media (max-width: 640px) {
+  .login-page {
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .login-showcase {
+    width: 100%;
+    min-height: auto;
+    padding: 29px 25px 32px;
+    background-position: center 45%;
+  }
+
+  .showcase-content {
+    max-width: 500px;
+  }
+
+  .showcase-logo {
+    margin-bottom: 30px;
+  }
+
+  .showcase-label {
+    margin-bottom: 10px;
+  }
+
   .showcase-description {
-    font-size: 16px;
+    font-size: clamp(32px, 8vw, 42px);
   }
 
   .showcase-line {
@@ -779,82 +719,94 @@
   }
 
   .showcase-message {
-    margin-top: 20px;
-
-    padding: 13px 15px;
+    margin-top: 22px;
   }
 
-  .showcase-message svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .showcase-message p {
-    font-size: 11px;
+  .showcase-caption {
+    display: none;
   }
 
   .login-form-section {
-    padding: 35px 18px;
+    width: 100%;
+    min-height: auto;
+    padding: 36px 25px 40px;
   }
 
   .login-form-container {
-    max-width: 100%;
+    max-width: 430px;
   }
 
   .login-logo {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
   }
 
-  .login-logo > span {
-    font-size: 23px;
+  .login-header {
+    margin-bottom: 28px;
   }
 
   .login-header h2 {
-    font-size: 28px;
+    font-size: 36px;
   }
 
-  .login-header p {
-    font-size: 14px;
+  .login-form {
+    gap: 19px;
   }
 
-  .modern-input {
-    height: 54px;
-
-    padding: 0 15px;
+  .login-footer {
+    margin-top: 23px;
   }
-
-  .primary-button {
-    height: 54px;
-  }
-
-  .secondary-button {
-    height: 52px;
-  }
-
 }
 
 /* =========================================
-   ERROS DE VALIDAÇÃO
+   CELULARES PEQUENOS
    ========================================= */
 
-.input-error {
-  border-color: #d9534f;
+@media (max-width: 380px) {
+  .login-showcase {
+    padding: 25px 19px;
+  }
+
+  .showcase-logo h1 {
+    font-size: 27px;
+  }
+
+  .showcase-description {
+    font-size: 31px;
+  }
+
+  .login-form-section {
+    padding: 30px 19px 35px;
+  }
+
+  .login-header h2 {
+    font-size: 32px;
+  }
+
+  .login-label-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0 8px;
+  }
+
+  .forgot-password-inline {
+    font-size: 10px;
+  }
 }
 
-.input-error:focus-within {
-  border-color: #d9534f;
+/* =========================================
+   ACESSIBILIDADE
+   ========================================= */
 
-  box-shadow:
-    0 0 0 4px rgba(217, 83, 79, 0.08);
-}
+@media (prefers-reduced-motion: reduce) {
+  .login-form-container,
+  .showcase-content {
+    animation: none;
+  }
 
-.error-message {
-  display: block;
-
-  margin-top: 6px;
-  margin-left: 3px;
-
-  color: #d9534f;
-
-  font-size: 12px;
+  .login-page *,
+  .login-page *::before,
+  .login-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

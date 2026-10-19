@@ -5,6 +5,7 @@ import {
   Leaf,
   UserPlus,
   ArrowRight,
+  Heart,
 } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -21,17 +22,23 @@ function Login() {
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
+    clearErrors("password");
+
     try {
       const response = await api.post("/api/auth/signin", {
-        email: data.email,
+        email: data.email.trim(),
         senha: data.password,
       });
 
-      localStorage.setItem("usuario", JSON.stringify(response.data));
+      localStorage.setItem(
+        "usuario",
+        JSON.stringify(response.data)
+      );
 
       navigate("/home");
     } catch (error) {
@@ -56,17 +63,24 @@ function Login() {
       <section
         className="login-showcase"
         style={{ backgroundImage: `url(${foodDonation})` }}
+        aria-label="Conheça o Harvest Hope"
       >
         <div className="showcase-overlay" />
 
         <div className="showcase-content">
-          <div className="showcase-logo">
-            <Leaf size={42} strokeWidth={1.8} />
+          <Link to="/" className="showcase-logo">
+            <span className="showcase-logo-icon">
+              <Leaf size={29} strokeWidth={1.7} />
+            </span>
 
             <h1>
               Harvest<span>Hope</span>
             </h1>
-          </div>
+          </Link>
+
+          <span className="showcase-label">
+            SOLIDARIEDADE EM CADA REFEIÇÃO
+          </span>
 
           <p className="showcase-description">
             Conectando alimentos
@@ -78,71 +92,89 @@ function Login() {
 
           <div className="showcase-benefits">
             <div className="benefit">
-              <Leaf size={20} />
-              <span>Menos desperdício</span>
+              <Leaf size={19} />
+              <span>Menos desperdício de alimentos</span>
             </div>
 
             <div className="benefit">
-              <UserPlus size={20} />
+              <UserPlus size={19} />
               <span>Mais pessoas alcançadas</span>
             </div>
 
             <div className="benefit">
-              <span className="heart-icon">♥</span>
-              <span>Um futuro mais sustentável</span>
+              <Heart size={19} />
+              <span>Um futuro mais solidário</span>
             </div>
           </div>
 
           <div className="showcase-message">
-            <Leaf size={30} />
+            <span className="showcase-message-icon">
+              <Heart size={21} />
+            </span>
 
             <p>
-              Juntos podemos transformar
+              Cada doação importa.
               <br />
-              realidades através da doação
-              <br />
-              de alimentos.
+              Cada gesto pode transformar uma vida.
             </p>
           </div>
         </div>
+
+        <span className="showcase-caption">
+          Harvest Hope · Compartilhar faz a diferença
+        </span>
       </section>
 
       <section className="login-form-section">
         <div className="login-form-container">
-          <div className="login-logo">
-            <Leaf size={38} strokeWidth={1.8} />
+          <Link to="/" className="login-logo">
+            <span className="login-logo-icon">
+              <Leaf size={25} strokeWidth={1.8} />
+            </span>
 
-            <span>
+            <span className="login-logo-text">
               Harvest<span>Hope</span>
             </span>
-          </div>
+          </Link>
 
           <div className="login-header">
-            <h2>Bem-vindo(a)!</h2>
+            <span className="login-eyebrow">
+              SUA JORNADA COMEÇA AQUI
+            </span>
+
+            <h2>Boas-vindas!</h2>
 
             <p>
-              Faça login para continuar
-              <br />
-              na plataforma.
+              Entre na sua conta para continuar
+              <br className="login-desktop-break" />
+              fazendo a diferença.
             </p>
           </div>
 
           <form
             className="login-form"
             onSubmit={handleSubmit(onSubmit)}
+            noValidate
           >
-            <div>
+            <div className="login-field">
+              <label htmlFor="login-email">E-mail</label>
+
               <div
                 className={`modern-input ${
                   errors.email ? "input-error" : ""
                 }`}
               >
-                <Mail size={19} />
+                <Mail size={19} aria-hidden="true" />
 
                 <input
+                  id="login-email"
                   type="email"
-                  placeholder="Digite seu e-mail"
+                  placeholder="voce@exemplo.com"
                   autoComplete="email"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={
+                    errors.email ? "login-email-error" : undefined
+                  }
                   {...register("email", {
                     required: "Campo obrigatório.",
                     pattern: {
@@ -154,45 +186,66 @@ function Login() {
               </div>
 
               {errors.email && (
-                <span className="error-message">
+                <span
+                  id="login-email-error"
+                  className="error-message"
+                  role="alert"
+                >
                   {errors.email.message}
                 </span>
               )}
             </div>
 
-            <div>
+            <div className="login-field">
+              <div className="login-label-row">
+                <label htmlFor="login-password">Senha</label>
+
+                <Link
+                  to="/recuperar-senha"
+                  className="forgot-password-inline"
+                >
+                  Esqueceu a senha?
+                </Link>
+              </div>
+
               <div
                 className={`modern-input ${
                   errors.password ? "input-error" : ""
                 }`}
               >
-                <Lock size={19} />
+                <Lock size={19} aria-hidden="true" />
 
                 <input
+                  id="login-password"
                   type="password"
                   placeholder="Digite sua senha"
                   autoComplete="current-password"
+                  aria-invalid={Boolean(errors.password)}
+                  aria-describedby={
+                    errors.password
+                      ? "login-password-error"
+                      : undefined
+                  }
                   {...register("password", {
                     required: "Campo obrigatório.",
                     minLength: {
                       value: 6,
-                      message: "A senha deve ter pelo menos 6 caracteres.",
+                      message:
+                        "A senha deve ter pelo menos 6 caracteres.",
                     },
                   })}
                 />
               </div>
 
               {errors.password && (
-                <span className="error-message">
+                <span
+                  id="login-password-error"
+                  className="error-message"
+                  role="alert"
+                >
                   {errors.password.message}
                 </span>
               )}
-            </div>
-
-            <div className="forgot-password">
-              <a href="#" onClick={(event) => event.preventDefault()}>
-                Esqueceu sua senha?
-              </a>
             </div>
 
             <button
@@ -200,8 +253,11 @@ function Login() {
               className="primary-button"
               disabled={isSubmitting}
             >
-              <span>{isSubmitting ? "Entrando..." : "Entrar"}</span>
-              <ArrowRight size={20} />
+              <span>
+                {isSubmitting ? "Entrando..." : "Entrar na plataforma"}
+              </span>
+
+              <ArrowRight size={19} />
             </button>
           </form>
 
@@ -213,8 +269,12 @@ function Login() {
 
           <Link to="/cadastro" className="secondary-button">
             <UserPlus size={19} />
-            <span>Criar conta</span>
+            <span>Criar uma conta</span>
           </Link>
+
+          <p className="login-footer">
+            Ao entrar, você ajuda a construir uma rede mais solidária.
+          </p>
         </div>
       </section>
     </main>

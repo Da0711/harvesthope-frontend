@@ -1,0 +1,557 @@
+/* =========================================
+   RECUPERAR SENHA — HARVEST HOPE
+========================================= */
+
+.recuperar-page {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 46px 24px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 8% 12%, rgba(190, 213, 193, .43), transparent 31%),
+    radial-gradient(ellipse at 95% 80%, rgba(216, 225, 205, .48), transparent 32%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, .7), transparent 58%),
+    #f5f6f1;
+  color: #24342e;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  animation: recuperar-entrada .5s ease both;
+}
+
+.recuperar-page *,
+.recuperar-page *::before,
+.recuperar-page *::after {
+  box-sizing: border-box;
+}
+
+.recuperar-decoracao {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(40, 92, 77, .09);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.recuperar-decoracao-um {
+  top: -125px;
+  right: -85px;
+  width: 370px;
+  height: 370px;
+  box-shadow:
+    0 0 0 28px rgba(40, 92, 77, .025),
+    0 0 0 60px rgba(40, 92, 77, .02);
+}
+
+.recuperar-decoracao-dois {
+  bottom: -180px;
+  left: -100px;
+  width: 390px;
+  height: 390px;
+  box-shadow:
+    0 0 0 30px rgba(40, 92, 77, .025),
+    0 0 0 65px rgba(40, 92, 77, .02);
+}
+
+/* Layout */
+
+.recuperar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(340px, .9fr);
+  align-items: center;
+  gap: clamp(36px, 6vw, 82px);
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Introdução */
+
+.recuperar-introducao {
+  animation: recuperar-subida .55s .06s ease both;
+}
+
+.recuperar-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 47px;
+  color: #285c4d;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: gap .2s ease, color .2s ease;
+}
+
+.recuperar-voltar:hover {
+  gap: 13px;
+  color: #173f35;
+}
+
+.recuperar-simbolo {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 22px;
+  border: 1px solid #d7e5d8;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #edf4eb, #e0ebe0);
+  color: #285c4d;
+  box-shadow: 0 8px 24px rgba(23, 63, 53, .08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.recuperar-simbolo:hover {
+  transform: translateY(-3px) rotate(-3deg);
+  box-shadow: 0 12px 28px rgba(23, 63, 53, .12);
+}
+
+.recuperar-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 17px;
+  color: #52775b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.recuperar-introducao h1 {
+  max-width: 440px;
+  margin: 0 0 17px;
+  color: #173f35;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4vw, 47px);
+  font-weight: 500;
+  line-height: 1.13;
+  letter-spacing: -1px;
+}
+
+.recuperar-introducao > p {
+  max-width: 420px;
+  margin: 0;
+  color: #68766f;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.recuperar-nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  max-width: 410px;
+  margin-top: 31px;
+  padding: 17px;
+  border: 1px solid rgba(215, 228, 213, .9);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .56);
+}
+
+.recuperar-nota-icone {
+  display: grid;
+  place-items: center;
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #e8f0e5;
+  color: #416b4b;
+}
+
+.recuperar-nota strong,
+.recuperar-nota small {
+  display: block;
+}
+
+.recuperar-nota strong {
+  margin-bottom: 4px;
+  color: #315440;
+  font-size: 12px;
+}
+
+.recuperar-nota small {
+  color: #778278;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* Card */
+
+.recuperar-card {
+  width: 100%;
+  padding: 35px;
+  border: 1px solid #e0e7dc;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow:
+    0 18px 50px rgba(23, 63, 53, .08),
+    0 3px 9px rgba(23, 63, 53, .025);
+  animation: recuperar-subida .6s .13s ease both;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+.recuperar-card:hover {
+  border-color: #d4e1d2;
+  box-shadow: 0 22px 55px rgba(23, 63, 53, .1);
+}
+
+.recuperar-card-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 23px;
+}
+
+.recuperar-card-icone {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #dce8d9;
+  border-radius: 13px;
+  background: #edf4e9;
+  color: #315b3c;
+}
+
+.recuperar-passo {
+  color: #829083;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.recuperar-card h2 {
+  margin: 0 0 9px;
+  color: #214c3e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.recuperar-descricao {
+  margin: 0 0 27px;
+  color: #758078;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* Campo */
+
+.recuperar-card form {
+  display: grid;
+  gap: 22px;
+  margin: 0;
+}
+
+.recuperar-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.recuperar-campo label {
+  color: #34473d;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.recuperar-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 49px;
+  padding: 0 13px;
+  border: 1px solid #dce3db;
+  border-radius: 10px;
+  background: #fbfcfa;
+  color: #78917c;
+  transition:
+    border-color .22s ease,
+    box-shadow .22s ease,
+    background-color .22s ease;
+}
+
+.recuperar-input-wrap:focus-within {
+  border-color: #71967a;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(96, 138, 112, .13);
+}
+
+.recuperar-input-wrap > svg {
+  flex-shrink: 0;
+  transition: color .2s ease;
+}
+
+.recuperar-input-wrap:focus-within > svg {
+  color: #285c4d;
+}
+
+.recuperar-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  height: 45px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #26382f;
+  font-family: inherit;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.recuperar-input-wrap input::placeholder {
+  color: #a0aaa1;
+  opacity: 1;
+}
+
+.recuperar-input-wrap input:focus {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+/* Botão */
+
+.recuperar-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 18px;
+  border: 1px solid #285c4d;
+  border-radius: 10px;
+  background: #285c4d;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  box-shadow: 0 5px 13px rgba(40, 92, 77, .14);
+  transition:
+    background .22s ease,
+    box-shadow .22s ease,
+    transform .22s ease;
+}
+
+.recuperar-botao:hover {
+  background: #173f35;
+  box-shadow: 0 8px 19px rgba(40, 92, 77, .2);
+  transform: translateY(-2px);
+}
+
+.recuperar-botao:active {
+  transform: translateY(0) scale(.99);
+}
+
+.recuperar-botao svg {
+  transition: transform .2s ease;
+}
+
+.recuperar-botao:hover svg {
+  transform: translateX(3px);
+}
+
+/* Mensagem de retorno */
+
+.recuperar-mensagem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 13px;
+  border: 1px solid #c9dfce;
+  border-radius: 10px;
+  background: #eff8f0;
+  color: #285c4d;
+  animation: recuperar-subida .25s ease both;
+}
+
+.recuperar-mensagem svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.recuperar-mensagem p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* Links e rodapé */
+
+.recuperar-divisor {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 26px 0 19px;
+}
+
+.recuperar-divisor span {
+  height: 1px;
+  flex: 1;
+  background: #e9eee6;
+}
+
+.recuperar-divisor small {
+  color: #929b91;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.recuperar-link-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid #dfe7dd;
+  border-radius: 10px;
+  color: #345b49;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.recuperar-link-login:hover {
+  border-color: #c9d9c7;
+  background: #f4f8f2;
+  transform: translateY(-1px);
+}
+
+.recuperar-rodape {
+  margin: 25px 0 0;
+  color: #98a197;
+  font-size: 10px;
+  text-align: center;
+}
+
+.recuperar-rodape span {
+  padding: 0 4px;
+  color: #6b9272;
+}
+
+/* Foco acessível */
+
+.recuperar-voltar:focus-visible,
+.recuperar-botao:focus-visible,
+.recuperar-link-login:focus-visible {
+  outline: 3px solid rgba(40, 92, 77, .3);
+  outline-offset: 3px;
+}
+
+/* Animações */
+
+@keyframes recuperar-entrada {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes recuperar-subida {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+
+@media (max-width: 760px) {
+  .recuperar-page {
+    padding: 30px 18px;
+  }
+
+  .recuperar-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    max-width: 480px;
+  }
+
+  .recuperar-voltar {
+    margin-bottom: 28px;
+  }
+
+  .recuperar-simbolo {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 17px;
+    border-radius: 16px;
+  }
+
+  .recuperar-introducao h1 {
+    max-width: 440px;
+    font-size: clamp(31px, 7vw, 39px);
+  }
+
+  .recuperar-introducao > p {
+    font-size: 13px;
+  }
+
+  .recuperar-nota {
+    margin-top: 22px;
+  }
+
+  .recuperar-card {
+    padding: 27px 23px;
+    border-radius: 18px;
+  }
+
+  .recuperar-card h2 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 380px) {
+  .recuperar-page {
+    padding: 22px 12px;
+  }
+
+  .recuperar-card {
+    padding: 23px 17px;
+  }
+
+  .recuperar-passo {
+    font-size: 9px;
+    letter-spacing: .7px;
+  }
+
+  .recuperar-introducao h1 {
+    font-size: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recuperar-page,
+  .recuperar-introducao,
+  .recuperar-card,
+  .recuperar-mensagem {
+    animation: none !important;
+  }
+
+  .recuperar-page *,
+  .recuperar-page *::before,
+  .recuperar-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

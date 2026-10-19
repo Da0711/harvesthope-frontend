@@ -1,0 +1,272 @@
+
+.cadastro-instituicao-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f7f5ef;
+  color: #26382f;
+  font-family: Arial, sans-serif;
+}
+
+.ci-header,
+.ci-card {
+  width: 100%;
+  max-width: 900px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ci-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  color: #285b46;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.ci-voltar:hover {
+  text-decoration: underline;
+}
+
+.ci-titulo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.ci-icone-principal {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #e5eee7;
+  color: #285b46;
+}
+
+.ci-titulo h1 {
+  margin: 0 0 8px;
+  color: #285b46;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.ci-titulo p {
+  margin: 0;
+  color: #68736c;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ci-card {
+  padding: 30px;
+  border: 1px solid #e6e0d3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.ci-card h2 {
+  margin: 0 0 8px;
+  color: #285b46;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.ci-descricao {
+  margin: 0 0 26px;
+  color: #68736c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ci-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  margin-bottom: 22px;
+}
+
+.ci-campo label {
+  color: #35483d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ci-campo input,
+.ci-campo select,
+.ci-campo textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dcded6;
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: #26382f;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.ci-campo input,
+.ci-campo select {
+  height: 46px;
+  padding: 0 12px;
+}
+
+.ci-campo textarea {
+  min-height: 110px;
+  padding: 13px 12px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.ci-campo input::placeholder,
+.ci-campo textarea::placeholder {
+  color: #9a9f99;
+}
+
+.ci-campo input:focus,
+.ci-campo select:focus,
+.ci-campo textarea:focus {
+  border-color: #789581;
+  box-shadow: 0 0 0 3px rgb(120 149 129 / 15%);
+}
+
+.ci-input-icone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ci-input-icone > svg {
+  flex-shrink: 0;
+  color: #789581;
+}
+
+.ci-input-icone input {
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-textarea-icone {
+  align-items: flex-start;
+}
+
+.ci-textarea-icone > svg {
+  margin-top: 13px;
+}
+
+.ci-textarea-icone textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-duas-colunas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ci-mensagem {
+  margin-bottom: 22px;
+  padding: 13px 15px;
+  border-radius: 7px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ci-erro {
+  border: 1px solid #e8c8c2;
+  background: #fff4f2;
+  color: #a44335;
+}
+
+.ci-sucesso {
+  border: 1px solid #c8ddcc;
+  background: #edf7ee;
+  color: #285b46;
+}
+
+.ci-acoes {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #eeeae1;
+}
+
+.ci-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1px solid #285b46;
+  border-radius: 7px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ci-botao-principal {
+  background: #285b46;
+  color: #fff;
+}
+
+.ci-botao-principal:hover {
+  background: #1e4938;
+}
+
+.ci-botao-secundario {
+  background: #fff;
+  color: #285b46;
+}
+
+.ci-botao-secundario:hover {
+  background: #f5f8f4;
+}
+
+@media (max-width: 650px) {
+  .cadastro-instituicao-page {
+    padding: 22px 14px;
+  }
+
+  .ci-titulo {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ci-titulo h1 {
+    font-size: 25px;
+  }
+
+  .ci-card {
+    padding: 22px 18px;
+  }
+
+  .ci-duas-colunas {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ci-acoes {
+    flex-direction: column-reverse;
+  }
+
+  .ci-botao {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

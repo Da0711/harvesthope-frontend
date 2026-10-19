@@ -1,0 +1,236 @@
+
+.detalhe-instituicao-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f7f5ef;
+  color: #26382f;
+  font-family: Arial, sans-serif;
+}
+
+.di-header,
+.di-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.di-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+  color: #285b46;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.di-voltar:hover {
+  text-decoration: underline;
+}
+
+.di-capa {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 145px;
+  margin-bottom: 24px;
+  padding: 28px;
+  border-radius: 14px;
+  background: #e5eee7;
+  color: #285b46;
+}
+
+.di-capa-icone {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.di-capa span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.di-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.di-card {
+  padding: 28px;
+  border: 1px solid #e6e0d3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.di-principal h1,
+.di-vazio h1 {
+  margin: 0 0 16px;
+  color: #285b46;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.di-descricao {
+  margin: 0;
+  color: #68736c;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.di-informacoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 26px 0;
+}
+
+.di-informacoes > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #eeeae1;
+}
+
+.di-informacoes > div:first-child {
+  border-top: 1px solid #eeeae1;
+}
+
+.di-informacoes > div > svg {
+  flex-shrink: 0;
+  color: #789581;
+}
+
+.di-informacoes > div > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.di-informacoes span {
+  color: #68736c;
+  font-size: 13px;
+}
+
+.di-informacoes strong {
+  color: #35483d;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.di-botao,
+.di-botao-secundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid #285b46;
+  border-radius: 7px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.di-botao {
+  background: #285b46;
+  color: #fff;
+}
+
+.di-botao:hover {
+  background: #1e4938;
+}
+
+.di-botao-secundario {
+  background: #fff;
+  color: #285b46;
+}
+
+.di-botao-secundario:hover {
+  background: #f5f8f4;
+}
+
+.di-solidariedade {
+  text-align: center;
+}
+
+.di-solidariedade-icone {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #e5eee7;
+  color: #285b46;
+}
+
+.di-solidariedade h2 {
+  margin: 0 0 12px;
+  color: #285b46;
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.di-solidariedade p {
+  margin: 0 0 22px;
+  color: #68736c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.di-vazio {
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.di-vazio > svg {
+  margin-bottom: 16px;
+  color: #789581;
+}
+
+.di-vazio p {
+  margin-bottom: 22px;
+  color: #68736c;
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .detalhe-instituicao-page {
+    padding: 22px 14px;
+  }
+
+  .di-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .di-card {
+    padding: 22px;
+  }
+
+  .di-capa {
+    min-height: 110px;
+    padding: 20px;
+  }
+
+  .di-capa-icone {
+    width: 58px;
+    height: 58px;
+  }
+
+  .di-principal h1,
+  .di-vazio h1 {
+    font-size: 25px;
+  }
+}

@@ -1,80 +1,199 @@
-css
+
 /* ========================================
-   CONTAINER PRINCIPAL
+   HARVEST HOPE — DETALHES DA DOAÇÃO
 ======================================== */
 
 .detalhes-container {
+  --verde-escuro: #173f35;
+  --verde: #285c4d;
+  --verde-claro: #e6eee8;
+  --creme: #f7f5ed;
+  --texto: #24342e;
+  --texto-secundario: #68766f;
+  --borda: #e1e6df;
+  --sombra: 0 12px 28px rgba(23, 63, 53, 0.08);
+
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
-  box-sizing: border-box;
-  padding: 36px 24px 48px;
-  background: #f7f5ef;
-  color: #285b46;
+  padding: 36px 24px 64px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 8% 12%,
+      rgba(195, 215, 193, 0.42),
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 96% 58%,
+      rgba(226, 211, 177, 0.30),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      #edf1e8 0%,
+      #f7f5ed 48%,
+      #f0ecdf 100%
+    );
+  color: var(--texto);
+  animation: detalhes-entrada 0.55s ease both;
 }
 
-.detalhes-header,
-.detalhes-conteudo {
-  width: 100%;
-  max-width: 1116px;
-  margin-right: auto;
-  margin-left: auto;
+.detalhes-container *,
+.detalhes-container *::before,
+.detalhes-container *::after {
+  box-sizing: border-box;
+}
+
+/* ========================================
+   FORMAS DECORATIVAS DO FUNDO
+======================================== */
+
+.detalhes-container::before,
+.detalhes-container::after {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  pointer-events: none;
+  content: "";
+}
+
+.detalhes-container::before {
+  top: 15px;
+  right: -110px;
+  width: 350px;
+  height: 300px;
+  border: 1px solid rgba(40, 92, 77, 0.10);
+  border-radius: 42% 58% 63% 37% / 48% 39% 61% 52%;
+  background: rgba(176, 201, 174, 0.22);
+  transform: rotate(-18deg);
+  animation: detalhes-forma-verde 14s ease-in-out infinite;
+}
+
+.detalhes-container::after {
+  top: 360px;
+  left: -140px;
+  width: 300px;
+  height: 370px;
+  border: 1px solid rgba(173, 145, 89, 0.12);
+  border-radius: 55% 45% 40% 60% / 45% 58% 42% 55%;
+  background: rgba(218, 199, 157, 0.20);
+  transform: rotate(20deg);
+  animation: detalhes-forma-bege 18s ease-in-out infinite;
 }
 
 /* ========================================
    CABEÇALHO
 ======================================== */
 
+.detalhes-header,
+.detalhes-conteudo {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .detalhes-header {
-  margin-bottom: 32px;
+  margin-bottom: 30px;
+  padding: 12px 0 22px;
+  animation: detalhes-subida 0.6s ease both;
+}
+
+/* Sem símbolos decorativos no cabeçalho */
+
+.detalhes-header::before,
+.detalhes-header::after {
+  display: none !important;
 }
 
 .detalhes-voltar {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: 30px;
-  color: #285b46;
-  font-size: 14px;
-  font-weight: 600;
+  margin-bottom: 27px;
+  padding: 9px 13px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 700;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s ease;
 }
 
 .detalhes-voltar:hover {
-  color: #1b4332;
-  text-decoration: underline;
+  transform: translateX(-3px);
+  border-color: #d9e4db;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--verde-escuro);
+}
+
+.detalhes-voltar svg {
+  flex-shrink: 0;
 }
 
 .detalhes-voltar:focus-visible {
-  outline: 2px solid #285b46;
-  outline-offset: 4px;
-  border-radius: 3px;
+  outline: 3px solid rgba(40, 92, 77, 0.35);
+  outline-offset: 3px;
 }
 
 .detalhes-header h1 {
-  margin: 0 0 10px;
-  color: #285b46;
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  color: var(--verde-escuro);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(30px, 4vw, 38px);
+  font-size: clamp(30px, 4vw, 42px);
   font-weight: 500;
   line-height: 1.2;
+  letter-spacing: -0.8px;
+  text-shadow: 0 2px 1px rgba(23, 63, 53, 0.04);
+  overflow-wrap: anywhere;
+}
+
+.detalhes-header h1::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 66px;
+  height: 3px;
+  border-radius: 4px;
+  background: #527b61;
+  content: "";
 }
 
 .detalhes-header > p {
+  max-width: 660px;
   margin: 0;
-  color: #62685f;
-  font-size: 15px;
-  line-height: 1.7;
+  color: var(--texto-secundario);
+  font-size: 14px;
+  line-height: 1.8;
 }
 
 /* ========================================
-   CONTEÚDO E COLUNAS
+   CONTEÚDO PRINCIPAL
 ======================================== */
 
 .detalhes-conteudo {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   align-items: start;
-  gap: 28px;
+  gap: 32px;
+  animation: detalhes-subida 0.7s ease both;
+  animation-delay: 0.08s;
+}
+
+.detalhes-imagem,
+.detalhes-informacoes {
+  min-width: 0;
 }
 
 /* ========================================
@@ -87,21 +206,32 @@ css
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
-  min-height: 320px;
+  min-height: 390px;
   overflow: hidden;
-  border: 1px solid #e6e0d3;
-  border-radius: 10px;
-  background: #e9e3d6;
+  border: 1px solid rgba(40, 92, 77, 0.16);
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255, 255, 255, 0.9),
+      transparent 65%
+    ),
+    #e9e9dd;
+  box-shadow: 0 12px 28px rgba(23, 63, 53, 0.10);
 }
 
 .detalhes-imagem img {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 320px;
-  max-height: 520px;
+  min-height: 390px;
+  max-height: 620px;
   object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.detalhes-imagem:hover img {
+  transform: scale(1.035);
 }
 
 .detalhes-imagem-placeholder {
@@ -109,64 +239,90 @@ css
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 18px;
   width: 100%;
-  min-height: 320px;
-  padding: 24px;
-  box-sizing: border-box;
-  color: #648b78;
+  min-height: 390px;
+  padding: 32px 24px;
+  color: #638574;
   text-align: center;
 }
 
 .detalhes-imagem-placeholder svg {
   flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  padding: 16px;
+  border: 1px solid rgba(40, 92, 77, 0.13);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .detalhes-imagem-placeholder span {
-  color: #62685f;
-  font-size: 14px;
-  line-height: 1.6;
+  max-width: 230px;
+  color: var(--texto-secundario);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 /* ========================================
-   INFORMAÇÕES DA DOAÇÃO
+   CARTÃO DE INFORMAÇÕES
 ======================================== */
 
 .detalhes-informacoes {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  gap: 16px;
+  gap: 17px;
+  padding: 27px;
+  border: 1px solid rgba(40, 92, 77, 0.12);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 30px rgba(23, 63, 53, 0.07);
+  backdrop-filter: blur(8px);
 }
 
 .detalhes-status {
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #285b46;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
+  gap: 7px;
+  max-width: 100%;
+  padding: 7px 12px;
+  border: 1px solid #b6d4bb;
+  border-radius: 999px;
+  background: #d8ebda;
+  color: #1c6039;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.4;
+  box-shadow: 0 3px 8px rgba(40, 92, 77, 0.06);
+  overflow-wrap: anywhere;
+}
+
+.detalhes-status::before {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
 }
 
 .detalhes-informacoes > h2 {
   margin: 0;
-  color: #285b46;
+  color: var(--verde-escuro);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 30px;
+  font-size: clamp(25px, 3vw, 34px);
   font-weight: 500;
   line-height: 1.25;
+  letter-spacing: -0.5px;
   overflow-wrap: anywhere;
 }
 
 .detalhes-descricao {
   margin: 0;
-  color: #51564f;
-  font-size: 15px;
-  line-height: 1.8;
+  color: #5e6a62;
+  font-size: 14px;
+  line-height: 1.85;
   overflow-wrap: anywhere;
 }
 
@@ -178,7 +334,7 @@ css
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .detalhes-dado {
@@ -186,75 +342,99 @@ css
   align-items: flex-start;
   gap: 12px;
   min-width: 0;
-  min-height: 86px;
-  padding: 18px 16px;
-  box-sizing: border-box;
-  border: 1px solid #ded8cb;
-  border-radius: 8px;
-  background: #e9e3d6;
+  min-height: 112px;
+  padding: 17px 14px;
+  border: 1px solid #dce5d8;
+  border-radius: 14px;
+  background: #f0f4eb;
+  transition:
+    border-color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.detalhes-dado:hover {
+  transform: translateY(-3px);
+  border-color: #c6d9ca;
+  box-shadow: 0 7px 16px rgba(23, 63, 53, 0.06);
 }
 
 .detalhes-dado > svg {
   flex-shrink: 0;
-  margin-top: 1px;
-  color: #285b46;
+  margin-top: 2px;
+  color: #285c4d;
 }
 
 .detalhes-dado > div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   min-width: 0;
 }
 
 .detalhes-dado strong {
-  color: #3d5748;
-  font-size: 12px;
+  color: var(--texto-secundario);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
   font-weight: 600;
   line-height: 1.5;
 }
 
 .detalhes-dado span {
-  color: #285b46;
-  font-family: Georgia, "Times New Roman", serif;
+  color: #234b3c;
+  font-family: "Segoe UI", Arial, sans-serif;
   font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
 /* ========================================
-   DOADOR
+   INFORMAÇÕES DO DOADOR
 ======================================== */
 
 .detalhes-doador {
-  padding: 20px;
-  border: 1px solid #ded8cb;
-  border-radius: 8px;
-  background: #e9e3d6;
+  padding: 19px;
+  border: 1px solid #e0e5dc;
+  border-radius: 14px;
+  background: #fff;
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.detalhes-doador:hover {
+  border-color: #cddbd0;
+  background: #fcfdfb;
 }
 
 .detalhes-doador h3 {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 10px;
-  color: #285b46;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 19px;
-  font-weight: 500;
+  gap: 9px;
+  margin: 0 0 7px;
+  color: var(--verde-escuro);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 750;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
 .detalhes-doador h3 svg {
   flex-shrink: 0;
+  color: #286b4d;
 }
 
 .detalhes-doador p {
   margin: 0;
-  color: #62685f;
-  font-size: 14px;
-  line-height: 1.6;
+  padding-left: 27px;
+  color: var(--texto-secundario);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 /* ========================================
@@ -262,32 +442,35 @@ css
 ======================================== */
 
 .detalhes-retirada {
-  padding: 20px;
-  border: 1px solid #ded8cb;
-  border-radius: 8px;
-  background: #e9e3d6;
+  padding: 19px;
+  border: 1px solid #d5e3d3;
+  border-radius: 14px;
+  background: #edf3e9;
 }
 
 .detalhes-retirada h3 {
   display: flex;
   align-items: center;
   gap: 9px;
-  margin: 0 0 12px;
-  color: #285b46;
-  font-size: 14px;
-  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--verde-escuro);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
   line-height: 1.5;
 }
 
 .detalhes-retirada h3 svg {
   flex-shrink: 0;
+  color: #286b4d;
 }
 
 .detalhes-retirada p {
   margin: 0;
-  color: #51564f;
-  font-size: 14px;
-  line-height: 1.7;
+  color: #52645a;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.8;
   overflow-wrap: anywhere;
 }
 
@@ -296,58 +479,387 @@ css
 ======================================== */
 
 .detalhes-aviso {
-  padding: 15px 17px;
-  border-left: 4px solid #cfa64d;
-  border-radius: 5px;
-  background: #eee7d8;
-  color: #55584f;
-  font-size: 13px;
-  line-height: 1.7;
+  padding: 14px 16px;
+  border: 1px solid #eadfbe;
+  border-left: 4px solid #c9a34e;
+  border-radius: 10px;
+  background: #fbf6e9;
+  color: #665b42;
+  font-size: 12px;
+  line-height: 1.8;
   overflow-wrap: anywhere;
 }
 
-/* Aviso de confirmação da solicitação.
-   Aplicado somente quando role="status". */
-
 .detalhes-aviso[role="status"] {
-  border: 1px solid #b7d3bd;
+  margin-bottom: -3px;
+  border: 1px solid #c9e2ce;
   border-left: 4px solid #347451;
-  background: #e6f1e7;
+  background: #eaf5eb;
   color: #24563b;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 /* ========================================
-   BOTÃO SOLICITAR
+   BOTÃO DE SOLICITAÇÃO
 ======================================== */
 
 .detalhes-botao-solicitar {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 10px;
   width: 100%;
-  min-height: 48px;
-  padding: 14px 20px;
-  border: 1px solid #285b46;
-  border-radius: 6px;
-  background: #285b46;
+  min-height: 52px;
+  margin-top: 2px;
+  padding: 15px 20px;
+  border: 1px solid var(--verde-escuro);
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    var(--verde),
+    var(--verde-escuro)
+  );
+  box-shadow: 0 5px 12px rgba(23, 63, 53, 0.13);
   color: #fff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
   text-align: center;
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
 .detalhes-botao-solicitar:hover:not(:disabled) {
-  transform: none;
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #326c58, #1b493b);
+  box-shadow: 0 8px 18px rgba(23, 63, 53, 0.2);
+}
+
+.detalhes-botao-solicitar:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(23, 63, 53, 0.12);
+}
+
+.detalhes-botao-solicitar:focus-visible {
+  outline: 3px solid rgba(40, 92, 77, 0.35);
+  outline-offset: 4px;
+}
+
+.detalhes-botao-solicitar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ========================================
+   DOAÇÃO NÃO ENCONTRADA
+======================================== */
+
+.detalhes-container > .detalhes-header:only-child {
+  max-width: 760px;
+  margin-top: 48px;
+  padding: 36px;
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--sombra);
+}
+
+.detalhes-container > .detalhes-header:only-child h1 {
+  margin-bottom: 12px;
+}
+
+.detalhes-container > .detalhes-header:only-child > p {
+  max-width: 540px;
+}
+
+/* ========================================
+   ANIMAÇÕES
+======================================== */
+
+@keyframes detalhes-entrada {
+  from {
+    opacity: 0;
   }
-  
-.detalhes-aviso[role="status"] {
-  margin-bottom: -4px;
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes detalhes-subida {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes detalhes-forma-verde {
+  0%, 100% {
+    transform: rotate(-18deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-10deg) translateY(-12px);
+  }
+}
+
+@keyframes detalhes-forma-bege {
+  0%, 100% {
+    transform: rotate(20deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(14deg) translateY(10px);
+  }
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+
+@media (max-width: 900px) {
+  .detalhes-container {
+    padding: 30px 22px 48px;
+  }
+
+  .detalhes-conteudo {
+    gap: 22px;
+  }
+
+  .detalhes-imagem,
+  .detalhes-imagem-placeholder {
+    min-height: 320px;
+  }
+
+  .detalhes-imagem img {
+    min-height: 320px;
+  }
+
+  .detalhes-informacoes {
+    gap: 15px;
+    padding: 22px;
+  }
+
+  .detalhes-dados {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .detalhes-dado {
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .detalhes-dado > div {
+    gap: 5px;
+  }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+
+@media (max-width: 640px) {
+  .detalhes-container {
+    padding: 22px 16px 36px;
+  }
+
+  .detalhes-container::before {
+    top: 100px;
+    right: -170px;
+    width: 250px;
+    height: 220px;
+  }
+
+  .detalhes-container::after {
+    top: 500px;
+    left: -180px;
+    width: 230px;
+    height: 280px;
+  }
+
+  .detalhes-header {
+    margin-bottom: 22px;
+  }
+
+  .detalhes-voltar {
+    gap: 7px;
+    margin-bottom: 21px;
+    padding: 8px 9px;
+    font-size: 12px;
+  }
+
+  .detalhes-header h1 {
+    font-size: 31px;
+    letter-spacing: -0.5px;
+  }
+
+  .detalhes-header > p {
+    font-size: 13px;
+  }
+
+  .detalhes-conteudo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .detalhes-imagem {
+    position: relative;
+    top: auto;
+    min-height: 260px;
+    border-radius: 17px;
+  }
+
+  .detalhes-imagem img {
+    min-height: 260px;
+    max-height: 380px;
+  }
+
+  .detalhes-imagem-placeholder {
+    min-height: 260px;
+    gap: 13px;
+    padding: 24px;
+  }
+
+  .detalhes-imagem-placeholder svg {
+    width: 56px;
+    height: 56px;
+  }
+
+  .detalhes-informacoes {
+    gap: 15px;
+    padding: 20px 17px;
+    border-radius: 17px;
+  }
+
+  .detalhes-informacoes > h2 {
+    font-size: 28px;
+  }
+
+  .detalhes-descricao {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .detalhes-dados {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .detalhes-dado {
+    flex-direction: column;
+    gap: 10px;
+    min-height: 116px;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .detalhes-dado > div {
+    gap: 7px;
+  }
+
+  .detalhes-dado strong {
+    font-size: 10px;
+  }
+
+  .detalhes-dado span {
+    font-size: 15px;
+  }
+
+  .detalhes-doador,
+  .detalhes-retirada {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .detalhes-doador h3 {
+    font-size: 14px;
+  }
+
+  .detalhes-retirada h3 {
+    font-size: 12px;
+  }
+
+  .detalhes-aviso {
+    padding: 13px;
+    font-size: 11px;
+  }
+
+  .detalhes-botao-solicitar {
+    min-height: 50px;
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+
+  .detalhes-container > .detalhes-header:only-child {
+    margin-top: 20px;
+    padding: 24px 19px;
+  }
+}
+
+/* ========================================
+   CELULARES PEQUENOS
+======================================== */
+
+@media (max-width: 360px) {
+  .detalhes-container {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .detalhes-header h1 {
+    font-size: 27px;
+  }
+
+  .detalhes-informacoes {
+    padding: 17px 13px;
+  }
+
+  .detalhes-informacoes > h2 {
+    font-size: 25px;
+  }
+
+  .detalhes-dados {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .detalhes-dado {
+    flex-direction: row;
+    min-height: 86px;
+    padding: 14px;
+  }
+
+  .detalhes-dado > div {
+    gap: 6px;
+  }
+}
+
+/* ========================================
+   ACESSIBILIDADE
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .detalhes-container,
+  .detalhes-header,
+  .detalhes-conteudo,
+  .detalhes-container::before,
+  .detalhes-container::after {
+    animation: none !important;
+  }
+
+  .detalhes-container *,
+  .detalhes-container *::before,
+  .detalhes-container *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
