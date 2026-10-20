@@ -66,8 +66,7 @@ function Cadastro() {
     setTipoMensagem("erro");
 
     try {
-      // O cadastro público do backend aceita somente usuários DOADOR.
-      // Instituições precisam ser cadastradas pelo fluxo administrativo próprio.
+      // O cadastro público da API aceita somente usuários do tipo DOADOR.
       if (data.tipoUsuario === "instituicao") {
         setMensagem(
           "O cadastro público está disponível somente para doadores. Para cadastrar uma instituição, entre em contato com a administração da plataforma."
@@ -84,12 +83,7 @@ function Cadastro() {
 
       await api.post("/api/v1/usuarios", payload);
 
-      setTipoMensagem("sucesso");
-      setMensagem(
-        "Conta criada com sucesso! Você já pode entrar usando seu e-mail e sua senha."
-      );
-
-      // Após cadastrar, redireciona automaticamente para a tela de login.
+      // Redireciona para a tela de login após o cadastro bem-sucedido.
       navigate("/", {
         replace: true,
         state: {
@@ -125,6 +119,7 @@ function Cadastro() {
             `Não foi possível criar a conta (erro ${status || "desconhecido"}). Tente novamente.`
         );
       }
+
       setTipoMensagem("erro");
     }
   };
@@ -474,7 +469,9 @@ function Cadastro() {
             className="cadastro-button"
             disabled={isSubmitting}
           >
-            <span>{isSubmitting ? "Criando conta..." : "Criar minha conta"}</span>
+            <span>
+              {isSubmitting ? "Criando conta..." : "Criar minha conta"}
+            </span>
             <ArrowRight size={19} />
           </button>
         </form>
@@ -489,7 +486,7 @@ function Cadastro() {
         </p>
       </section>
     </main>
-  );cd harvest-hope
+  );
 }
 
 export default Cadastro;
